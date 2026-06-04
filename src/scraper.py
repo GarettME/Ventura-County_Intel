@@ -30,6 +30,8 @@ from pathlib import Path
 from typing import Optional
 
 import requests
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # ── Logging ──────────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -154,9 +156,9 @@ async def clerk_scrape(date_from: str, date_to: str) -> list[Record]:
                 ),
             })
             # GET first to pick up any initial cookies/CSRF tokens
-            http.get(DISCLAIMER_URL, timeout=15)
+            http.get(DISCLAIMER_URL, timeout=15, verify=False)
             # POST empty body to accept (mirrors the jQuery AJAX call)
-            resp = http.post(DISCLAIMER_URL, timeout=15)
+            resp = http.post(DISCLAIMER_URL, timeout=15, verify=False)
             log.info("Disclaimer POST → HTTP %d", resp.status_code)
 
             # Inject all cookies into the Playwright browser context
