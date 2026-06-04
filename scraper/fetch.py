@@ -138,35 +138,10 @@ async def clerk_scrape(date_from: str, date_to: str) -> list[Record]:
         log.info("Loading disclaimer …")
         try:
             await page.goto(DISCLAIMER_URL, timeout=30_000, wait_until="networkidle")
-            log.info("Disclaimer page loaded — URL: %s | title: %s", page.url, await page.title())
-
-            # ── DEBUG: log rendered DOM state ────────────────────────────────
-            debug_info = await page.evaluate("""() => {
-                const forms = Array.from(document.querySelectorAll('form')).map(f => ({id: f.id, action: f.action}));
-                const buttons = Array.from(document.querySelectorAll('button,input[type=submit]')).map(b => b.id + '|' + b.textContent.trim().slice(0,40));
-                const disclaimer_form = document.querySelector('[id*="disclaimerForm"]');
-                return {
-                    forms: forms,
-                    buttons: buttons,
-                    disclaimer_form_id: disclaimer_form ? disclaimer_form.id : null,
-                    disclaimer_form_action: disclaimer_form ? disclaimer_form.action : null,
-                    submit_url_from_js: (() => {
-                        try { return window._disclaimerSubmitUrl || null; } catch(e) { return null; }
-                    })()
-                };
-            }""")
-            log.info("DOM forms: %s", debug_info.get('forms'))
-            log.info("DOM buttons: %s", debug_info.get('buttons'))
-            log.info("disclaimerForm id: %s | action: %s", debug_info.get('disclaimer_form_id'), debug_info.get('disclaimer_form_action'))
-
-            # ── Try to click accept button ────────────────────────────────────
             for sel in [
-                "#submitDisclaimerAccept",
-                "button:has-text('I Accept')",
-                "text=I Accept",
-                "input[value*='Accept' i]",
-                "button:has-text('Accept')",
-                "a:has-text('Accept')",
+                "text=I Accept", "text=Accept", "text=I Agree",
+                "input[value*='Accept' i]", "button:has-text('Accept')",
+                "a:has-text('Accept')", "a:has-text('Agree')",
             ]:
                 try:
                     btn = page.locator(sel).first
@@ -174,20 +149,6 @@ async def clerk_scrape(date_from: str, date_to: str) -> list[Record]:
                         await btn.click()
                         log.info("Disclaimer accepted via: %s", sel)
                         await page.wait_for_load_state("networkidle", timeout=15_000)
-                        log.info("Post-disclaimer URL: %s", page.url)
-                        # Log DOM state after click to confirm session set
-                        post_url = page.url
-                        if "disclaimer" in post_url.lower():
-                            log.warning("Still on disclaimer after click — AJAX may have failed")
-                            # Dump the form action URL from JS context as last resort
-                            try:
-                                action = await page.evaluate("""() => {
-                                    const f = document.querySelector('[id*="disclaimerForm"]');
-                                    return f ? f.action : 'FORM_NOT_FOUND';
-                                }""")
-                                log.info("disclaimerForm action at click time: %s", action)
-                            except Exception:
-                                pass
                         break
                 except Exception:
                     continue
@@ -225,7 +186,6 @@ async def _scrape_one_type(
     for attempt in range(1, RETRY_ATTEMPTS + 1):
         try:
             await page.goto(SEARCH_URL, timeout=30_000, wait_until="networkidle")
-            log.info("  [%s] landed on: %s", doc_label, page.url)
             break
         except PWTimeout:
             log.warning("Timeout loading search page (attempt %d/%d)", attempt, RETRY_ATTEMPTS)
