@@ -135,45 +135,41 @@ async def clerk_scrape(date_from: str, date_to: str) -> list[Record]:
         page = await context.new_page()
 
         # ── Step 1: Disclaimer ───────────────────────────────────────────────
-        # Navigate to the search page first so the portal embeds the correct
-        # ?redirect= URL in the disclaimer JS (otherwise it may redirect to
-        # /web/errors after acceptance, though the session cookie is still set).
-        log.info("Navigating to search page (will auto-redirect through disclaimer) …")
+        # Navigate directly to DISCLAIMER_URL — this lets the JS fully render
+        # the hidden form element whose action URL the AJAX POST needs.
+        # Navigating via SEARCH_URL redirect causes the form to be undefined
+        # when we click, silently failing the AJAX and leaving session unset.
+        log.info("Loading disclaimer …")
         try:
-            await page.goto(SEARCH_URL, timeout=30_000, wait_until="networkidle")
+            await page.goto(DISCLAIMER_URL, timeout=30_000, wait_until="networkidle")
 
-            if "disclaimer" in page.url.lower():
-                log.info("Disclaimer detected — waiting for accept button …")
-                # Wait for the JS-rendered button before trying to click
+            # Wait for the JS-rendered form action to be present before clicking
+            try:
+                await page.wait_for_selector("[id*='disclaimerForm']", timeout=8_000)
+                log.info("Disclaimer form rendered")
+            except Exception:
+                log.warning("disclaimerForm element not detected — clicking anyway")
+
+            for sel in [
+                "#submitDisclaimerAccept",
+                "button:has-text('I Accept')",
+                "text=I Accept",
+                "input[value*='Accept' i]",
+                "button:has-text('Accept')",
+                "a:has-text('Accept')",
+            ]:
                 try:
-                    await page.wait_for_selector(
-                        "#submitDisclaimerAccept, button:has-text('I Accept')",
-                        timeout=10_000,
-                    )
+                    btn = page.locator(sel).first
+                    if await btn.is_visible(timeout=2_000):
+                        await btn.click()
+                        log.info("Disclaimer accepted via: %s", sel)
+                        await page.wait_for_load_state("networkidle", timeout=15_000)
+                        log.info("Post-disclaimer URL: %s", page.url)
+                        break
                 except Exception:
-                    log.warning("Accept button did not appear within 10s")
-
-                for sel in [
-                    "#submitDisclaimerAccept",
-                    "button:has-text('I Accept')",
-                    "text=I Accept",
-                    "input[value*='Accept' i]",
-                    "button:has-text('Accept')",
-                ]:
-                    try:
-                        btn = page.locator(sel).first
-                        if await btn.is_visible(timeout=2_000):
-                            await btn.click()
-                            log.info("Disclaimer accepted via: %s", sel)
-                            await page.wait_for_load_state("networkidle", timeout=15_000)
-                            log.info("Post-disclaimer URL: %s", page.url)
-                            break
-                    except Exception:
-                        continue
-            else:
-                log.info("No disclaimer redirect — session already active at %s", page.url)
+                    continue
         except Exception as exc:
-            log.warning("Disclaimer/search step error (continuing): %s", exc)
+            log.warning("Disclaimer step error (continuing): %s", exc)
 
         # ── Step 2: For each doc type ────────────────────────────────────────
         for doc_label, (cat, cat_label) in DOC_TYPE_MAP.items():
