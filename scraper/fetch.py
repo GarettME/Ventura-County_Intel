@@ -58,7 +58,9 @@ GHL_CSV = DATA_DIR / "ghl_export.csv"
 # ── Config ────────────────────────────────────────────────────────────────────
 CLERK_BASE = "https://clerkrecorderselfservice.venturacounty.gov"
 DISCLAIMER_URL = f"{CLERK_BASE}/web/user/disclaimer"
+CLERK_SEARCH_URL = f"{CLERK_BASE}/web/guest/search"
 ASSESSOR_SEARCH_URL = "https://assessor.venturacounty.gov/assessor-data/property-search/"
+DEBUG_MODE = os.getenv("DEBUG", "false").lower() == "true"
 
 LOOKBACK_DAYS = int(os.getenv("LOOKBACK_DAYS", "7"))
 MAX_PAGES = 100
@@ -326,6 +328,55 @@ def enrich_with_parcel(rec: Record, lookup: dict[str, dict]) -> Record:
 # CLERK PORTAL: Playwright async scraper
 # ════════════════════════════════════════════════════════════════════════════
 
+async def _accept_disclaimer(page) -> bool:
+    """
+    Accept the Tyler Technologies disclaimer.
+    Must be called while the page is already on the disclaimer URL.
+    Returns True if accepted successfully.
+    """
+    from playwright.async_api import TimeoutError as PWTimeout
+
+    # Wait for the JS-rendered "I Accept" button to appear
+    try:
+        await page.wait_for_selector(
+            "#submitDisclaimerAccept, button:has-text('I Accept'), input[value*='Accept' i]",
+            timeout=10_000,
+        )
+    except PWTimeout:
+        log.warning("Disclaimer accept button never appeared")
+        if DEBUG_MODE:
+            (DATA_DIR / "debug_disclaimer.html").write_text(await page.content())
+        return False
+
+    for selector in [
+        "#submitDisclaimerAccept",
+        "button:has-text('I Accept')",
+        "text=I Accept",
+        "input[value*='Accept' i]",
+        "button:has-text('Agree')",
+    ]:
+        try:
+            btn = page.locator(selector).first
+            if await btn.is_visible(timeout=2_000):
+                await btn.click()
+                log.info("Disclaimer accepted via: %s", selector)
+                # Wait for redirect away from disclaimer
+                await page.wait_for_function(
+                    "() => !window.location.href.includes('disclaimer')",
+                    timeout=15_000,
+                )
+                await page.wait_for_load_state("networkidle", timeout=15_000)
+                log.info("Post-disclaimer URL: %s", page.url)
+                return True
+        except PWTimeout:
+            continue
+        except Exception as exc:
+            log.debug("Selector %s failed: %s", selector, exc)
+
+    log.warning("Could not click disclaimer accept button")
+    return False
+
+
 async def clerk_scrape(doc_codes: list[str], date_from: str, date_to: str) -> list[Record]:
     """
     Use Playwright to navigate the Ventura County clerk portal,
@@ -355,27 +406,28 @@ async def clerk_scrape(doc_codes: list[str], date_from: str, date_to: str) -> li
         page = await context.new_page()
 
         # ── 1. Accept disclaimer ─────────────────────────────────────────────
-        log.info("Loading disclaimer: %s", DISCLAIMER_URL)
+        # Navigate to the SEARCH page first — the portal auto-redirects to
+        # disclaimer with the correct ?redirect= param, so after acceptance
+        # we land back on the search page (not /web/errors).
+        log.info("Navigating to search page (portal will redirect through disclaimer)")
         try:
-            await page.goto(DISCLAIMER_URL, timeout=30_000, wait_until="networkidle")
-            # Click any "Accept" / "Agree" / "I Accept" button
-            for selector in [
-                "text=I Accept", "text=Accept", "text=I Agree", "text=Agree",
-                "input[value*='Accept' i]", "input[value*='Agree' i]",
-                "button:has-text('Accept')", "button:has-text('Agree')",
-                "a:has-text('Accept')", "a:has-text('Agree')",
-            ]:
-                try:
-                    btn = page.locator(selector).first
-                    if await btn.is_visible(timeout=2_000):
-                        await btn.click()
-                        log.info("Disclaimer accepted via: %s", selector)
-                        await page.wait_for_load_state("networkidle", timeout=15_000)
-                        break
-                except PWTimeout:
-                    continue
+            await page.goto(CLERK_SEARCH_URL, timeout=30_000, wait_until="networkidle")
+            log.info("Landed on: %s", page.url)
+
+            if "disclaimer" in page.url.lower():
+                accepted = await _accept_disclaimer(page)
+                if not accepted:
+                    log.error("Disclaimer not accepted — aborting scrape")
+                    await browser.close()
+                    return []
+                log.info("After disclaimer, now at: %s", page.url)
+            else:
+                log.info("No disclaimer redirect — already on search page")
+
         except Exception as exc:
-            log.warning("Disclaimer step error (continuing): %s", exc)
+            log.error("Failed to load search page: %s", exc)
+            await browser.close()
+            return []
 
         # ── 2. Scrape each doc type ──────────────────────────────────────────
         for code in doc_codes:
@@ -401,63 +453,130 @@ async def _scrape_doc_type(page, code: str, cat: str, cat_label: str,
 
     records: list[Record] = []
 
-    # ── Build search URL (try common patterns) ───────────────────────────────
-    # Most self-service portals have a /search or /document route
-    search_base = f"{CLERK_BASE}/web/document/search"
-    search_url = f"{search_base}?docType={code}&dateFrom={date_from}&dateTo={date_to}"
-
+    # ── Navigate to the search page ──────────────────────────────────────────
     for attempt in range(1, RETRY_ATTEMPTS + 1):
         try:
-            await page.goto(search_url, timeout=30_000, wait_until="networkidle")
+            await page.goto(CLERK_SEARCH_URL, timeout=30_000, wait_until="networkidle")
+            # If disclaimer reappears (session expired), re-accept
+            if "disclaimer" in page.url.lower():
+                log.warning("Session expired mid-scrape — re-accepting disclaimer")
+                accepted = await _accept_disclaimer(page)
+                if not accepted:
+                    log.error("Could not re-accept disclaimer for %s — skipping", code)
+                    return records
             break
         except PWTimeout:
-            log.warning("Timeout navigating to search page (attempt %d)", attempt)
+            log.warning("Timeout navigating to search page for %s (attempt %d)", code, attempt)
             if attempt == RETRY_ATTEMPTS:
                 return records
             await asyncio.sleep(2 * attempt)
 
-    # ── Try to fill a search form if we landed on one ────────────────────────
+    # ── Wait for JS-rendered search form ─────────────────────────────────────
+    # Tyler Technologies Self-Service renders the form via jQuery Mobile after
+    # networkidle — we must wait for an actual form element to be present.
+    form_appeared = False
+    for form_sel in [
+        "form", "select[name]", "input[name]",
+        "[id*='searchForm']", "[id*='SearchForm']",
+        "[class*='search']", "[data-role='page']",
+    ]:
+        try:
+            await page.wait_for_selector(form_sel, timeout=8_000)
+            form_appeared = True
+            log.debug("Form detected via selector: %s", form_sel)
+            break
+        except PWTimeout:
+            continue
+
+    if not form_appeared:
+        log.warning("No search form detected for %s — dumping page for debug", code)
+        if DEBUG_MODE:
+            (DATA_DIR / f"debug_search_{code}.html").write_text(await page.content())
+        else:
+            # Always save first failure for diagnosis
+            debug_f = DATA_DIR / "debug_search_notype.html"
+            if not debug_f.exists():
+                debug_f.write_text(await page.content())
+
+    # ── Try to fill the search form ───────────────────────────────────────────
+    form_filled = False
     try:
-        # Look for doc-type and date fields by common patterns
+        # Doc type field
         for dt_sel in [
+            "select[name*='DocType' i]", "select[name*='doctype' i]",
+            "select[id*='DocType' i]", "select[id*='docType' i]",
             "input[name*='DocType' i]", "input[name*='doctype' i]",
-            "select[name*='DocType' i]", "#DocType", "#docType",
+            "#DocType", "#docType",
         ]:
             el = page.locator(dt_sel).first
-            if await el.is_visible(timeout=1_500):
-                tag = await el.evaluate("e => e.tagName.toLowerCase()")
-                if tag == "select":
-                    await el.select_option(value=code)
-                else:
-                    await el.fill(code)
-                break
+            try:
+                if await el.is_visible(timeout=2_000):
+                    tag = await el.evaluate("e => e.tagName.toLowerCase()")
+                    if tag == "select":
+                        await el.select_option(value=code)
+                    else:
+                        await el.fill(code)
+                    log.debug("Filled doc type '%s' via %s", code, dt_sel)
+                    form_filled = True
+                    break
+            except PWTimeout:
+                continue
 
-        for df_sel in ["input[name*='DateFrom' i]", "input[name*='dateFrom' i]",
-                       "input[name*='StartDate' i]", "#DateFrom"]:
+        # Date from
+        for df_sel in [
+            "input[name*='DateFrom' i]", "input[name*='dateFrom' i]",
+            "input[name*='StartDate' i]", "input[name*='startDate' i]",
+            "input[id*='DateFrom' i]", "#DateFrom", "#StartDate",
+        ]:
             el = page.locator(df_sel).first
-            if await el.is_visible(timeout=1_500):
-                await el.fill(date_from)
-                break
+            try:
+                if await el.is_visible(timeout=2_000):
+                    await el.fill(date_from)
+                    log.debug("Filled date_from '%s' via %s", date_from, df_sel)
+                    break
+            except PWTimeout:
+                continue
 
-        for dt_sel2 in ["input[name*='DateTo' i]", "input[name*='dateTo' i]",
-                        "input[name*='EndDate' i]", "#DateTo"]:
+        # Date to
+        for dt_sel2 in [
+            "input[name*='DateTo' i]", "input[name*='dateTo' i]",
+            "input[name*='EndDate' i]", "input[name*='endDate' i]",
+            "input[id*='DateTo' i]", "#DateTo", "#EndDate",
+        ]:
             el = page.locator(dt_sel2).first
-            if await el.is_visible(timeout=1_500):
-                await el.fill(date_to)
-                break
+            try:
+                if await el.is_visible(timeout=2_000):
+                    await el.fill(date_to)
+                    log.debug("Filled date_to '%s' via %s", date_to, dt_sel2)
+                    break
+            except PWTimeout:
+                continue
 
-        # Click search button
+        # Submit
         for btn_sel in [
             "button[type='submit']", "input[type='submit']",
             "button:has-text('Search')", "a:has-text('Search')",
+            "[id*='search' i][type='button']",
         ]:
             btn = page.locator(btn_sel).first
-            if await btn.is_visible(timeout=1_500):
-                await btn.click()
-                await page.wait_for_load_state("networkidle", timeout=20_000)
-                break
+            try:
+                if await btn.is_visible(timeout=2_000):
+                    await btn.click()
+                    await page.wait_for_load_state("networkidle", timeout=20_000)
+                    log.debug("Clicked search button via %s", btn_sel)
+                    break
+            except PWTimeout:
+                continue
+
     except Exception as exc:
-        log.debug("Form fill skipped: %s", exc)
+        log.warning("Form fill error for %s: %s", code, exc)
+        if DEBUG_MODE:
+            (DATA_DIR / f"debug_form_{code}.html").write_text(await page.content())
+
+    if not form_filled:
+        log.warning("Could not fill search form for doc type %s — no matching selectors", code)
+        if DEBUG_MODE:
+            (DATA_DIR / f"debug_nofill_{code}.html").write_text(await page.content())
 
     # ── Paginate ─────────────────────────────────────────────────────────────
     page_num = 1
