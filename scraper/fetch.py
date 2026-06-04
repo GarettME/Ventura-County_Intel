@@ -175,22 +175,39 @@ async def clerk_scrape(date_from: str, date_to: str) -> list[Record]:
                         log.info("Disclaimer accepted via: %s", sel)
                         await page.wait_for_load_state("networkidle", timeout=15_000)
                         log.info("Post-disclaimer URL: %s", page.url)
-                        # Log DOM state after click to confirm session set
-                        post_url = page.url
-                        if "disclaimer" in post_url.lower():
-                            log.warning("Still on disclaimer after click — AJAX may have failed")
-                            # Dump the form action URL from JS context as last resort
-                            try:
-                                action = await page.evaluate("""() => {
-                                    const f = document.querySelector('[id*="disclaimerForm"]');
-                                    return f ? f.action : 'FORM_NOT_FOUND';
-                                }""")
-                                log.info("disclaimerForm action at click time: %s", action)
-                            except Exception:
-                                pass
                         break
                 except Exception:
                     continue
+
+            # ── Force session establishment before the scrape loop ────────────
+            # The disclaimer AJAX fires async; navigate to SEARCH_URL once to
+            # confirm the session is live and capture search page DOM structure.
+            log.info("Warming session — navigating to SEARCH_URL …")
+            await page.goto(SEARCH_URL, timeout=30_000, wait_until="networkidle")
+            log.info("Warm-up landed on: %s", page.url)
+
+            if "disclaimer" in page.url.lower():
+                log.error("Session still not set after disclaimer click — aborting")
+                await browser.close()
+                return all_records
+
+            # ── DEBUG: log search page form structure (first run only) ────────
+            search_dom = await page.evaluate("""() => {
+                const inputs = Array.from(document.querySelectorAll('input')).map(i =>
+                    (i.id || i.name || '?') + '[ph=' + (i.placeholder || '') + '][type=' + i.type + ']'
+                );
+                const selects = Array.from(document.querySelectorAll('select')).map(s => s.id || s.name || '?');
+                const buttons = Array.from(document.querySelectorAll('button,input[type=submit],input[type=button]')).map(b =>
+                    (b.id || b.name || '?') + '|' + (b.textContent || b.value || '').trim().slice(0,40)
+                );
+                const labels = Array.from(document.querySelectorAll('label')).map(l => l.textContent.trim().slice(0,40));
+                return { inputs, selects, buttons, labels };
+            }""")
+            log.info("SEARCH inputs: %s", search_dom.get('inputs', []))
+            log.info("SEARCH selects: %s", search_dom.get('selects', []))
+            log.info("SEARCH buttons: %s", search_dom.get('buttons', []))
+            log.info("SEARCH labels: %s", search_dom.get('labels', []))
+
         except Exception as exc:
             log.warning("Disclaimer step error (continuing): %s", exc)
 
