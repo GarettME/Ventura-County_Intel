@@ -29,6 +29,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
 
+import requests
+
 # ── Logging ──────────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
@@ -134,57 +136,76 @@ async def clerk_scrape(date_from: str, date_to: str) -> list[Record]:
         )
         page = await context.new_page()
 
-        # ── Step 1: Disclaimer ───────────────────────────────────────────────
-        log.info("Loading disclaimer …")
+        # ── Step 1: Accept disclaimer via direct HTTP POST ────────────────────
+        # The portal's "I Accept" button fires an AJAX POST to the disclaimer
+        # URL which sets a session cookie.  The disclaimerForm element whose
+        # action URL the jQuery handler reads is never rendered into the DOM
+        # (the jQuery handler POSTs to undefined → current page URL).  Rather
+        # than fighting the JS, we replicate the POST with requests directly,
+        # then inject the resulting session cookie into the Playwright context.
+        log.info("Accepting disclaimer via HTTP POST …")
         try:
-            await page.goto(DISCLAIMER_URL, timeout=30_000, wait_until="networkidle")
-            for sel in [
-                "text=I Accept", "text=Accept", "text=I Agree",
-                "input[value*='Accept' i]", "button:has-text('Accept')",
-                "a:has-text('Accept')", "a:has-text('Agree')",
-            ]:
-                try:
-                    btn = page.locator(sel).first
-                    if await btn.is_visible(timeout=2_000):
-                        await btn.click()
-                        log.info("Disclaimer accepted via: %s", sel)
-                        await page.wait_for_load_state("networkidle", timeout=15_000)
-                        log.info("Post-disclaimer URL: %s", page.url)
-                        break
-                except Exception:
-                    continue
+            http = requests.Session()
+            http.headers.update({
+                "User-Agent": (
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/124.0.0.0 Safari/537.36"
+                ),
+            })
+            # GET first to pick up any initial cookies/CSRF tokens
+            http.get(DISCLAIMER_URL, timeout=15)
+            # POST empty body to accept (mirrors the jQuery AJAX call)
+            resp = http.post(DISCLAIMER_URL, timeout=15)
+            log.info("Disclaimer POST → HTTP %d", resp.status_code)
 
-            # ── Force session establishment before the scrape loop ────────────
-            # The disclaimer AJAX fires async; navigate to SEARCH_URL once to
-            # confirm the session is live and capture search page DOM structure.
-            log.info("Warming session — navigating to SEARCH_URL …")
+            # Inject all cookies into the Playwright browser context
+            pw_cookies = []
+            for cookie in http.cookies:
+                pw_cookies.append({
+                    "name":   cookie.name,
+                    "value":  cookie.value,
+                    "domain": "clerkrecorderselfservice.venturacounty.gov",
+                    "path":   cookie.path or "/",
+                })
+            if pw_cookies:
+                await context.add_cookies(pw_cookies)
+                log.info("Injected %d cookie(s) into Playwright: %s",
+                         len(pw_cookies), [c["name"] for c in pw_cookies])
+            else:
+                log.warning("No cookies received from disclaimer POST — session may not be set")
+
+        except Exception as exc:
+            log.warning("Disclaimer HTTP POST error (continuing): %s", exc)
+
+        # ── Confirm session and log search page DOM ────────────────────────────
+        log.info("Navigating to search page to confirm session …")
+        try:
             await page.goto(SEARCH_URL, timeout=30_000, wait_until="networkidle")
-            log.info("Warm-up landed on: %s", page.url)
+            log.info("Landed on: %s", page.url)
 
             if "disclaimer" in page.url.lower():
-                log.error("Session still not set after disclaimer click — aborting")
+                log.error("Search page still redirecting to disclaimer — session not set")
                 await browser.close()
                 return all_records
 
-            # ── DEBUG: log search page form structure (first run only) ────────
+            # Log the actual DOM so we can fix selectors if needed
             search_dom = await page.evaluate("""() => {
                 const inputs = Array.from(document.querySelectorAll('input')).map(i =>
-                    (i.id || i.name || '?') + '[ph=' + (i.placeholder || '') + '][type=' + i.type + ']'
+                    (i.id||i.name||'?')+'[ph='+(i.placeholder||'')+'][type='+i.type+']'
                 );
-                const selects = Array.from(document.querySelectorAll('select')).map(s => s.id || s.name || '?');
+                const selects = Array.from(document.querySelectorAll('select')).map(s => s.id||s.name||'?');
                 const buttons = Array.from(document.querySelectorAll('button,input[type=submit],input[type=button]')).map(b =>
-                    (b.id || b.name || '?') + '|' + (b.textContent || b.value || '').trim().slice(0,40)
+                    (b.id||b.name||'?')+'|'+(b.textContent||b.value||'').trim().slice(0,40)
                 );
-                const labels = Array.from(document.querySelectorAll('label')).map(l => l.textContent.trim().slice(0,40));
-                return { inputs, selects, buttons, labels };
+                return { inputs, selects, buttons };
             }""")
-            log.info("SEARCH inputs: %s", search_dom.get('inputs', []))
+            log.info("SEARCH inputs:  %s", search_dom.get('inputs', []))
             log.info("SEARCH selects: %s", search_dom.get('selects', []))
             log.info("SEARCH buttons: %s", search_dom.get('buttons', []))
-            log.info("SEARCH labels: %s", search_dom.get('labels', []))
 
         except Exception as exc:
-            log.warning("Disclaimer step error (continuing): %s", exc)
+            log.warning("Search page navigation error (continuing): %s", exc)
 
         # ── Step 2: For each doc type ────────────────────────────────────────
         for doc_label, (cat, cat_label) in DOC_TYPE_MAP.items():
