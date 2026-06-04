@@ -247,65 +247,96 @@ async def _scrape_one_type(
                 return records
             await asyncio.sleep(3 * attempt)
 
+    # ── Wait for search form to be ready ────────────────────────────────────
+    try:
+        await page.wait_for_selector("#field_RecordingDateID_DOT_StartDate", timeout=10_000)
+    except Exception:
+        log.warning("[%s] Search form not ready — skipping", doc_label)
+        return records
+
     # ── Fill Recording Date Start ────────────────────────────────────────────
     try:
-        date_start_input = page.locator("input[placeholder='mm/dd/yyyy']").first
-        await date_start_input.click()
-        await date_start_input.fill(date_from)
+        date_start = page.locator("#field_RecordingDateID_DOT_StartDate")
+        await date_start.click()
+        await date_start.fill(date_from)
         await page.keyboard.press("Tab")
         await asyncio.sleep(0.3)
     except Exception as e:
-        log.warning("Could not fill date start: %s", e)
+        log.warning("[%s] Could not fill date start: %s", doc_label, e)
 
     # ── Fill Recording Date End ──────────────────────────────────────────────
     try:
-        date_inputs = page.locator("input[placeholder='mm/dd/yyyy']")
-        count = await date_inputs.count()
-        if count >= 2:
-            date_end_input = date_inputs.nth(1)
-            await date_end_input.click()
-            await date_end_input.fill(date_to)
-            await page.keyboard.press("Tab")
-            await asyncio.sleep(0.3)
+        date_end = page.locator("#field_RecordingDateID_DOT_EndDate")
+        await date_end.click()
+        await date_end.fill(date_to)
+        await page.keyboard.press("Tab")
+        await asyncio.sleep(0.3)
     except Exception as e:
-        log.warning("Could not fill date end: %s", e)
+        log.warning("[%s] Could not fill date end: %s", doc_label, e)
 
-    # ── Select Document Type from dropdown ───────────────────────────────────
+    # ── Select Document Type ─────────────────────────────────────────────────
+    # The DOM shows: field_selfservice_documentTypes — a text input that
+    # filters a multi-select list. Type the doc label, wait for the dropdown
+    # item to appear, then click it.
     try:
-        # The Document Types field is a searchable multi-select list
-        # Click the search box inside the Document Types widget
-        doc_type_search = page.locator("input[placeholder*='filter' i], input[placeholder*='search' i], .doc-type-search input").first
-        await doc_type_search.click()
+        doc_input = page.locator("#field_selfservice_documentTypes")
+        await doc_input.click()
+        await doc_input.fill(doc_label)
+        await asyncio.sleep(1.0)
+
+        # The filter shows a dropdown; items appear in an adjacent list
+        # Try multiple selector patterns for the dropdown items
+        item_found = False
+        for item_sel in [
+            f"li:has-text('{doc_label}')",
+            f"[role='option']:has-text('{doc_label}')",
+            f"[class*='item']:has-text('{doc_label}')",
+            f"[class*='option']:has-text('{doc_label}')",
+            f"span:has-text('{doc_label}')",
+        ]:
+            try:
+                item = page.locator(item_sel).first
+                if await item.is_visible(timeout=2_000):
+                    await item.click()
+                    log.debug("[%s] Selected via %s", doc_label, item_sel)
+                    item_found = True
+                    break
+            except Exception:
+                continue
+
+        if not item_found:
+            # Fallback: press Enter to accept the typed value
+            await page.keyboard.press("Enter")
+            log.debug("[%s] Pressed Enter to select doc type", doc_label)
+
         await asyncio.sleep(0.5)
 
-        # Type to filter the list
-        await doc_type_search.fill(doc_label[:8])  # type first 8 chars to narrow list
-        await asyncio.sleep(0.8)
-
-        # Click the matching item in the list
-        # The list items appear as text rows in a scrollable div
-        item = page.locator(f"text='{doc_label}'").first
-        if not await item.is_visible(timeout=3_000):
-            # Try without quotes / case insensitive
-            item = page.get_by_text(doc_label, exact=True).first
-        await item.click()
-        await asyncio.sleep(0.3)
-        log.debug("Selected doc type: %s", doc_label)
     except Exception as e:
-        log.warning("Could not select doc type '%s': %s", doc_label, e)
+        log.warning("[%s] Could not select doc type: %s", doc_label, e)
         return records
 
-    # ── Click Search ─────────────────────────────────────────────────────────
+    # ── Submit search (Enter key — no dedicated Search button in DOM) ─────────
     try:
-        search_btn = page.locator("button:has-text('Search'), input[value='Search']").first
-        await search_btn.click()
+        await page.keyboard.press("Enter")
         await page.wait_for_load_state("networkidle", timeout=25_000)
         await asyncio.sleep(1.0)
+        log.debug("[%s] Search submitted", doc_label)
     except Exception as e:
-        log.warning("Search button error: %s", e)
-        return records
+        log.warning("[%s] Search submit error: %s", doc_label, e)
 
     # ── Paginate and parse ───────────────────────────────────────────────────
+    # ── DEBUG: log result area structure on first doc type ───────────────────
+    if doc_label == list(DOC_TYPE_MAP.keys())[0]:
+        result_dom = await page.evaluate("""() => {
+            const text = document.body.innerText.slice(0, 500);
+            const divs = Array.from(document.querySelectorAll('div[class]')).slice(0,20).map(d=>d.className.slice(0,60));
+            const lis = Array.from(document.querySelectorAll('li[class]')).slice(0,10).map(l=>l.className.slice(0,60));
+            return { body_text: text, div_classes: divs, li_classes: lis };
+        }""")
+        log.info("RESULT body text: %s", result_dom.get('body_text','')[:300])
+        log.info("RESULT div classes: %s", result_dom.get('div_classes',[])[:10])
+        log.info("RESULT li classes: %s", result_dom.get('li_classes',[])[:5])
+
     page_num = 1
     while page_num <= MAX_PAGES:
         html = await page.content()
