@@ -52,11 +52,11 @@ jobs:
     steps:
       # ── 1. Checkout ─────────────────────────────────────────────────────────
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # ── 2. Python ───────────────────────────────────────────────────────────
       - name: Set up Python 3.11
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           cache: "pip"
@@ -98,7 +98,7 @@ jobs:
 
       # ── 8. Upload JSON artifact ─────────────────────────────────────────────
       - name: Upload JSON artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: leads-json-${{ github.run_number }}
           path: data/records.json
@@ -106,7 +106,7 @@ jobs:
 
       # ── 9. Upload GHL CSV artifact ──────────────────────────────────────────
       - name: Upload GHL CSV artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ghl-csv-${{ github.run_number }}
           path: data/ghl_export.csv
@@ -124,12 +124,12 @@ jobs:
 
       # ── 11. Deploy dashboard to GitHub Pages ────────────────────────────────
       - name: Deploy to GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dashboard/
 
       - name: Deploy Pages
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
       # ── 12. Job summary ─────────────────────────────────────────────────────
       - name: Print run summary
