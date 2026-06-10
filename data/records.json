@@ -1,11 +1,11 @@
 {
-  "fetched_at": "2026-06-09T10:27:41.698857Z",
+  "fetched_at": "2026-06-10T10:48:59.329380Z",
   "source": "Ventura County Clerk-Recorder",
   "date_range": {
-    "from": "06/02/2026",
-    "to": "06/09/2026"
+    "from": "06/03/2026",
+    "to": "06/10/2026"
   },
-  "total": 15,
+  "total": 13,
   "with_address": 0,
   "records": [
     {
@@ -33,6 +33,56 @@
         "New this week"
       ],
       "score": 55
+    },
+    {
+      "doc_num": "2026000042555",
+      "doc_type": "NOTICE OF DEFAULT",
+      "filed": "06/09/2026",
+      "cat": "foreclosure",
+      "cat_label": "Notice of Default",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "clerk_url": "#",
+      "flags": [
+        "Pre-foreclosure",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000042461",
+      "doc_type": "NOTICE OF DEFAULT",
+      "filed": "06/09/2026",
+      "cat": "foreclosure",
+      "cat_label": "Notice of Default",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "clerk_url": "#",
+      "flags": [
+        "Pre-foreclosure",
+        "New this week"
+      ],
+      "score": 45
     },
     {
       "doc_num": "2026000042095",
@@ -266,106 +316,6 @@
       "cat": "foreclosure",
       "cat_label": "Notice of Default",
       "owner": "",
-      "grantee": "",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "#",
-      "flags": [
-        "Pre-foreclosure",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000040501",
-      "doc_type": "NOTICE OF DEFAULT",
-      "filed": "06/02/2026",
-      "cat": "foreclosure",
-      "cat_label": "Notice of Default",
-      "owner": "CASILLAS JR RALPH",
-      "grantee": "",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "#",
-      "flags": [
-        "Pre-foreclosure",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000040500",
-      "doc_type": "NOTICE OF DEFAULT",
-      "filed": "06/02/2026",
-      "cat": "foreclosure",
-      "cat_label": "Notice of Default",
-      "owner": "",
-      "grantee": "",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "#",
-      "flags": [
-        "Pre-foreclosure",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000040385",
-      "doc_type": "NOTICE OF DEFAULT",
-      "filed": "06/02/2026",
-      "cat": "foreclosure",
-      "cat_label": "Notice of Default",
-      "owner": "",
-      "grantee": "",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "#",
-      "flags": [
-        "Pre-foreclosure",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000040383",
-      "doc_type": "NOTICE OF DEFAULT",
-      "filed": "06/02/2026",
-      "cat": "foreclosure",
-      "cat_label": "Notice of Default",
-      "owner": "ARMAS ALEJANDRO",
       "grantee": "",
       "amount": null,
       "legal": "",
