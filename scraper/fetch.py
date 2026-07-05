@@ -57,6 +57,7 @@ GHL_CSV       = DATA_DIR      / "ghl_export.csv"
 CLERK_BASE      = "https://clerkrecorderselfservice.venturacounty.gov"
 DISCLAIMER_URL  = f"{CLERK_BASE}/web/user/disclaimer"
 SEARCH_URL      = f"{CLERK_BASE}/web/search/DOCSEARCH17S3"
+RESULTS_URL     = f"{CLERK_BASE}/web/searchResults/DOCSEARCH17S3"
 
 LOOKBACK_DAYS   = int(os.getenv("LOOKBACK_DAYS", "7"))
 MAX_PAGES       = 20        # safety cap
@@ -175,6 +176,7 @@ async def clerk_scrape(date_from: str, date_to: str) -> list[Record]:
                 "Chrome/124.0.0.0 Safari/537.36"
             ),
             viewport={"width": 1280, "height": 900},
+            ignore_https_errors=True,   # portal cert isn't trusted by the runner
         )
         page = await context.new_page()
 
@@ -262,32 +264,70 @@ async def clerk_scrape(date_from: str, date_to: str) -> list[Record]:
     return all_records
 
 
+async def _dismiss_popups(page) -> None:
+    """Dismiss the portal's session-timeout / interstitial popups if present.
+
+    After a few searches the portal shows a "Your session is about to expire —
+    Yes, Continue / No, Start Over" popup that overlays the form. Left up, it
+    makes every subsequent search see "form not ready". Click Continue / any
+    visible dismiss control so the form is reachable again.
+    """
+    for sel in (
+        "[id*='session-continue']",
+        "a[onclick*='closeSelectedItemsWarningPopup']",
+        ".ui-popup-active a[data-rel='back']",
+    ):
+        try:
+            btn = page.locator(sel).first
+            if await btn.is_visible(timeout=800):
+                await btn.click()
+                await asyncio.sleep(0.4)
+        except Exception:
+            continue
+
+
+async def _prepare_search_form(page, doc_label: str) -> bool:
+    """Navigate to the search page and get the form ready, retrying through
+    transient failures and session popups. Returns True when the date field is
+    present and interactable."""
+    from playwright.async_api import TimeoutError as PWTimeout
+
+    for attempt in range(1, RETRY_ATTEMPTS + 1):
+        try:
+            await page.goto(SEARCH_URL, timeout=30_000, wait_until="networkidle")
+        except PWTimeout:
+            log.warning("[%s] Timeout loading search page (attempt %d/%d)",
+                        doc_label, attempt, RETRY_ATTEMPTS)
+            await asyncio.sleep(3 * attempt)
+            continue
+
+        await _dismiss_popups(page)
+        try:
+            await page.wait_for_selector(
+                "#field_RecordingDateID_DOT_StartDate", state="visible", timeout=10_000
+            )
+            return True
+        except Exception:
+            log.warning("[%s] Search form not ready (attempt %d/%d) — retrying",
+                        doc_label, attempt, RETRY_ATTEMPTS)
+            await _dismiss_popups(page)
+            await asyncio.sleep(2 * attempt)
+
+    return False
+
+
 async def _scrape_one_type(
     page,
     doc_label: str,
     date_from: str,
     date_to: str,
 ) -> list[Record]:
-    from playwright.async_api import TimeoutError as PWTimeout
-
     records: list[Record] = []
 
-    # Navigate fresh to the search page each time (resets any prior chip selection)
-    for attempt in range(1, RETRY_ATTEMPTS + 1):
-        try:
-            await page.goto(SEARCH_URL, timeout=30_000, wait_until="networkidle")
-            break
-        except PWTimeout:
-            log.warning("Timeout loading search page (attempt %d/%d)", attempt, RETRY_ATTEMPTS)
-            if attempt == RETRY_ATTEMPTS:
-                return records
-            await asyncio.sleep(3 * attempt)
-
-    # ── Wait for search form to be ready ────────────────────────────────────
-    try:
-        await page.wait_for_selector("#field_RecordingDateID_DOT_StartDate", timeout=10_000)
-    except Exception:
-        log.warning("[%s] Search form not ready — skipping", doc_label)
+    # Navigate fresh each time (resets any prior chip selection) and make sure
+    # the form is actually ready — skip this type only after real retries.
+    if not await _prepare_search_form(page, doc_label):
+        log.warning("[%s] Search form unavailable after retries — skipping", doc_label)
         return records
 
     # ── Fill Recording Date Start / End ──────────────────────────────────────
@@ -314,35 +354,42 @@ async def _scrape_one_type(
     # unrelated <li> elsewhere on the page — no chip was added, so the doc-type
     # filter was silently dropped and every search returned the same date-only
     # (unfiltered) result set. That was the 200→20 collapse.
-    try:
-        doc_input = page.locator("#field_selfservice_documentTypes")
-        await doc_input.click()
-        await doc_input.fill("")
-        await doc_input.type(doc_label, delay=30)   # real keystrokes drive the autocomplete
+    chip = page.locator(
+        f"#field_selfservice_documentTypes-holder li[data-filtertext='{doc_label}']"
+    )
+    item = page.locator(
+        f"#field_selfservice_documentTypes-aclist li.acItem[data-filtertext='{doc_label}']"
+    ).first
+    doc_input = page.locator("#field_selfservice_documentTypes")
 
-        item = page.locator(
-            f"#field_selfservice_documentTypes-aclist li.acItem[data-filtertext='{doc_label}']"
-        ).first
-        await item.wait_for(state="visible", timeout=8_000)
-        await item.click()
-        await asyncio.sleep(0.4)
+    # The autocomplete list can be slow to populate — retry a couple of times
+    # (re-typing) before giving up on this doc type.
+    for sel_attempt in range(1, 3 + 1):
+        try:
+            await doc_input.click()
+            await doc_input.fill("")
+            await doc_input.type(doc_label, delay=30)  # real keystrokes drive the autocomplete
+            await item.wait_for(state="visible", timeout=8_000)
+            await item.click()
+            await asyncio.sleep(0.4)
+            if await chip.count() > 0:
+                break
+        except Exception as e:
+            log.warning("[%s] Doc-type select attempt %d/3 failed: %s",
+                        doc_label, sel_attempt, e)
+        await asyncio.sleep(1.0)
 
-        # Confirm the chip actually landed in the holder
-        chip = page.locator(
-            f"#field_selfservice_documentTypes-holder li[data-filtertext='{doc_label}']"
-        )
-        if await chip.count() == 0:
-            log.warning("[%s] Doc-type chip not added — skipping", doc_label)
-            return records
-    except Exception as e:
-        log.warning("[%s] Could not select doc type: %s", doc_label, e)
+    if await chip.count() == 0:
+        log.warning("[%s] Doc-type chip not added after retries — skipping", doc_label)
         return records
 
     # ── Submit search (Enter — no dedicated Search button) ───────────────────
+    # Pressing Enter fires the AJAX POST to /web/searchPost/... which stores the
+    # search criteria in the server-side session. Results are then served, 100
+    # per page, from /web/searchResults/...?page=N — which we fetch below.
     try:
         await page.keyboard.press("Enter")
         await page.wait_for_load_state("networkidle", timeout=25_000)
-        # Wait for either result rows or a "no results" state
         try:
             await page.wait_for_selector(
                 "li.ss-search-row, .no-results, .too-many-results-message",
@@ -350,27 +397,40 @@ async def _scrape_one_type(
             )
         except Exception:
             pass
-        await asyncio.sleep(1.0)
+        await asyncio.sleep(0.5)
     except Exception as e:
         log.warning("[%s] Search submit error: %s", doc_label, e)
 
-    # ── Load all rows (portal serves 100/page; scroll triggers lazy load) ────
-    prev = -1
-    for _ in range(MAX_PAGES):
-        now = await page.locator("li.ss-search-row").count()
-        if now == prev:
-            break
-        prev = now
+    # ── Paginate: fetch searchResults?page=N until a page is short/empty ─────
+    # page.request shares the browser context's cookies + session, so the
+    # server returns the same filtered result set the SPA would render.
+    records: list[Record] = []
+    raw_rows = 0
+    for pg in range(1, MAX_PAGES + 1):
         try:
-            await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-            await asyncio.sleep(1.0)
-        except Exception:
+            resp = await page.request.get(
+                f"{RESULTS_URL}?page={pg}&_={int(time.time() * 1000)}",
+                headers={"X-Requested-With": "XMLHttpRequest", "Referer": SEARCH_URL},
+                timeout=25_000,
+            )
+        except Exception as e:
+            log.warning("[%s] page %d fetch error: %s", doc_label, pg, e)
+            break
+        if not resp.ok:
+            log.warning("[%s] page %d HTTP %d — stopping", doc_label, pg, resp.status)
             break
 
-    html = await page.content()
-    records = _parse_result_rows(html, doc_label)
-    log.info("  Parsed %d lead rows for %s (%d raw rows on page)",
-             len(records), doc_label, prev if prev > 0 else 0)
+        html = await resp.text()
+        page_recs = _parse_result_rows(html, doc_label)
+        n_rows = html.count('class="ss-search-row')
+        raw_rows += n_rows
+        records.extend(page_recs)
+
+        if n_rows < 100:          # last page (portal serves 100/page)
+            break
+
+    log.info("  Parsed %d lead rows for %s (%d raw rows across pages)",
+             len(records), doc_label, raw_rows)
     return records
 
 
@@ -401,8 +461,12 @@ def _parse_result_rows(html: str, searched_label: str) -> list[Record]:
 
     for row in soup.select("li.ss-search-row"):
         h1 = row.select_one("h1")
-        header = h1.get_text(" ", strip=True) if h1 else ""
-        m = re.match(r"\s*(\d{6,})\s*[•·]\s*(.+?)\s*$", header)
+        # h1 is "2026000052402 • NOTICE OF DEFAULT" but the raw fragment carries
+        # internal whitespace and the bullet may decode as •, ·, or \x95
+        # depending on charset — so collapse space and match the separator
+        # generically (any non-alphanumerics between the number and the type).
+        header = re.sub(r"\s+", " ", h1.get_text(" ", strip=True)) if h1 else ""
+        m = re.match(r"(\d{6,})[\s\W]+([A-Za-z].*?)\s*$", header)
         if not m:
             continue
         doc_num, doc_type = m.group(1), m.group(2).strip()
