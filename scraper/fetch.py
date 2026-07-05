@@ -62,21 +62,61 @@ LOOKBACK_DAYS   = int(os.getenv("LOOKBACK_DAYS", "7"))
 MAX_PAGES       = 20        # safety cap
 RETRY_ATTEMPTS  = 3
 
-# Exact document type labels as they appear in the portal dropdown
-# mapped to (category_key, human_label)
-DOC_TYPE_MAP: dict[str, tuple[str, str]] = {
-    "LIS PENDENS":              ("lis_pendens",   "Lis Pendens"),
-    "NOTICE OF DEFAULT":        ("foreclosure",   "Notice of Default"),
-    "NOTICE OF TRUSTEE SALE":   ("foreclosure",   "Notice of Trustee Sale"),
-    "JUDGMENT":                 ("judgment",      "Judgment"),
-    "ABSTRACT OF JUDGMENT":     ("judgment",      "Abstract of Judgment"),
-    "TAX LIEN":                 ("tax_lien",      "Tax Lien"),
-    "FEDERAL TAX LIEN":         ("tax_lien",      "Federal Tax Lien"),
-    "STATE TAX LIEN":           ("tax_lien",      "State Tax Lien"),
-    "MECHANICS LIEN":           ("mechanic_lien", "Mechanics Lien"),
-    "LIEN":                     ("lien",          "Lien"),
-    "PROBATE":                  ("probate",       "Probate"),
-}
+# Search terms to submit — must match the EXACT document-type labels as they
+# appear in the Ventura portal's autocomplete (confirmed against the live DOM).
+# The portal matches "Contains Any", so each term also returns longer labels
+# that contain it (e.g. "NOTICE OF DEFAULT" also returns "RESCISSION NOTICE OF
+# DEFAULT"); _categorize() below sorts each returned row by its ACTUAL type and
+# drops reversals/satisfactions that aren't motivated-seller signals.
+SEARCH_TERMS: list[str] = [
+    "NOTICE OF DEFAULT",
+    "NOTICE OF TRUSTEES SALE",   # county spells it "TRUSTEES" (was "TRUSTEE" — returned 0)
+    "NOTICE ACTION",             # Notice of Pendency of Action = lis pendens equivalent
+    "JUDGMENT",
+    "ABSTRACT OF JUDGMENT",
+    "FEDERAL TAX LIEN",
+    "TAX LIEN",
+    "MECHANICS LIEN",
+]
+
+# Document types that REVERSE or SATISFY an obligation — a returned row whose
+# actual type contains any of these is not a motivated-seller lead and is skipped.
+_EXCLUDE_TOKENS = (
+    "RESCISSION", "RELEASE", "SATISFACTION", "SUBSTITUTION", "REQUEST",
+    "CERTIFICATE", "REVOCATION", "WITHDRAWAL", "CANCELLATION",
+)
+
+
+def _categorize(doc_type: str) -> tuple[Optional[str], str]:
+    """Map an ACTUAL document-type label to (category_key, human_label).
+
+    Returns (None, "") for rows that should be dropped (reversals, satisfactions,
+    releases, or types we don't score).
+    """
+    t = doc_type.upper()
+    if any(tok in t for tok in _EXCLUDE_TOKENS):
+        return None, ""
+    if "TRUSTEE" in t and "SALE" in t and "DEED" not in t:
+        return "foreclosure", "Notice of Trustee Sale"
+    if "DEFAULT" in t:
+        return "foreclosure", "Notice of Default"
+    if "ABSTRACT" in t and "JUDG" in t:
+        return "judgment", "Abstract of Judgment"
+    if "JUDGMENT" in t:
+        return "judgment", "Judgment"
+    if "FEDERAL TAX LIEN" in t:
+        return "tax_lien", "Federal Tax Lien"
+    if "TAX LIEN" in t or "TAX COLLECTOR LIEN" in t:
+        return "tax_lien", "Tax Lien"
+    if "MECHANIC" in t:
+        return "mechanic_lien", "Mechanics Lien"
+    if "LIS PENDENS" in t or "PENDENCY" in t or "NOTICE ACTION" in t:
+        return "lis_pendens", "Lis Pendens"
+    if "PROBATE" in t:
+        return "probate", "Probate"
+    if "LIEN" in t:
+        return "lien", "Lien"
+    return None, ""
 
 
 # ── Data model ────────────────────────────────────────────────────────────────
@@ -209,12 +249,10 @@ async def clerk_scrape(date_from: str, date_to: str) -> list[Record]:
         except Exception as exc:
             log.warning("Search page navigation error (continuing): %s", exc)
 
-        # ── Step 2: For each doc type ────────────────────────────────────────
-        for doc_label, (cat, cat_label) in DOC_TYPE_MAP.items():
+        # ── Step 2: For each search term ─────────────────────────────────────
+        for doc_label in SEARCH_TERMS:
             log.info("Scraping: %s", doc_label)
-            recs = await _scrape_one_type(
-                page, doc_label, cat, cat_label, date_from, date_to
-            )
+            recs = await _scrape_one_type(page, doc_label, date_from, date_to)
             log.info("  → %d records for %s", len(recs), doc_label)
             all_records.extend(recs)
 
@@ -227,8 +265,6 @@ async def clerk_scrape(date_from: str, date_to: str) -> list[Record]:
 async def _scrape_one_type(
     page,
     doc_label: str,
-    cat: str,
-    cat_label: str,
     date_from: str,
     date_to: str,
 ) -> list[Record]:
@@ -236,7 +272,7 @@ async def _scrape_one_type(
 
     records: list[Record] = []
 
-    # Navigate fresh to the search page each time
+    # Navigate fresh to the search page each time (resets any prior chip selection)
     for attempt in range(1, RETRY_ATTEMPTS + 1):
         try:
             await page.goto(SEARCH_URL, timeout=30_000, wait_until="networkidle")
@@ -254,206 +290,156 @@ async def _scrape_one_type(
         log.warning("[%s] Search form not ready — skipping", doc_label)
         return records
 
-    # ── Fill Recording Date Start ────────────────────────────────────────────
-    try:
-        date_start = page.locator("#field_RecordingDateID_DOT_StartDate")
-        await date_start.click()
-        await date_start.fill(date_from)
-        await page.keyboard.press("Tab")
-        await asyncio.sleep(0.3)
-    except Exception as e:
-        log.warning("[%s] Could not fill date start: %s", doc_label, e)
+    # ── Fill Recording Date Start / End ──────────────────────────────────────
+    for sel, val, name in (
+        ("#field_RecordingDateID_DOT_StartDate", date_from, "start"),
+        ("#field_RecordingDateID_DOT_EndDate",   date_to,   "end"),
+    ):
+        try:
+            loc = page.locator(sel)
+            await loc.click()
+            await loc.fill(val)
+            await page.keyboard.press("Tab")
+            await asyncio.sleep(0.3)
+        except Exception as e:
+            log.warning("[%s] Could not fill date %s: %s", doc_label, name, e)
 
-    # ── Fill Recording Date End ──────────────────────────────────────────────
-    try:
-        date_end = page.locator("#field_RecordingDateID_DOT_EndDate")
-        await date_end.click()
-        await date_end.fill(date_to)
-        await page.keyboard.press("Tab")
-        await asyncio.sleep(0.3)
-    except Exception as e:
-        log.warning("[%s] Could not fill date end: %s", doc_label, e)
-
-    # ── Select Document Type ─────────────────────────────────────────────────
-    # The DOM shows: field_selfservice_documentTypes — a text input that
-    # filters a multi-select list. Type the doc label, wait for the dropdown
-    # item to appear, then click it.
+    # ── Select Document Type (autocomplete chip) ─────────────────────────────
+    # #field_selfservice_documentTypes is an autocomplete input. Typing filters
+    # a dedicated suggestion list (#field_selfservice_documentTypes-aclist) whose
+    # <li class="acItem" data-filtertext="..."> items, when CLICKED, add a chip
+    # to the holder. The chip is what the server actually filters on.
+    #
+    # The previous code did `li:has-text(label).first`, which matched an
+    # unrelated <li> elsewhere on the page — no chip was added, so the doc-type
+    # filter was silently dropped and every search returned the same date-only
+    # (unfiltered) result set. That was the 200→20 collapse.
     try:
         doc_input = page.locator("#field_selfservice_documentTypes")
         await doc_input.click()
-        await doc_input.fill(doc_label)
-        await asyncio.sleep(1.0)
+        await doc_input.fill("")
+        await doc_input.type(doc_label, delay=30)   # real keystrokes drive the autocomplete
 
-        # The filter shows a dropdown; items appear in an adjacent list
-        # Try multiple selector patterns for the dropdown items
-        item_found = False
-        for item_sel in [
-            f"li:has-text('{doc_label}')",
-            f"[role='option']:has-text('{doc_label}')",
-            f"[class*='item']:has-text('{doc_label}')",
-            f"[class*='option']:has-text('{doc_label}')",
-            f"span:has-text('{doc_label}')",
-        ]:
-            try:
-                item = page.locator(item_sel).first
-                if await item.is_visible(timeout=2_000):
-                    await item.click()
-                    log.debug("[%s] Selected via %s", doc_label, item_sel)
-                    item_found = True
-                    break
-            except Exception:
-                continue
+        item = page.locator(
+            f"#field_selfservice_documentTypes-aclist li.acItem[data-filtertext='{doc_label}']"
+        ).first
+        await item.wait_for(state="visible", timeout=8_000)
+        await item.click()
+        await asyncio.sleep(0.4)
 
-        if not item_found:
-            # Fallback: press Enter to accept the typed value
-            await page.keyboard.press("Enter")
-            log.debug("[%s] Pressed Enter to select doc type", doc_label)
-
-        await asyncio.sleep(0.5)
-
+        # Confirm the chip actually landed in the holder
+        chip = page.locator(
+            f"#field_selfservice_documentTypes-holder li[data-filtertext='{doc_label}']"
+        )
+        if await chip.count() == 0:
+            log.warning("[%s] Doc-type chip not added — skipping", doc_label)
+            return records
     except Exception as e:
         log.warning("[%s] Could not select doc type: %s", doc_label, e)
         return records
 
-    # ── Submit search (Enter key — no dedicated Search button in DOM) ─────────
+    # ── Submit search (Enter — no dedicated Search button) ───────────────────
     try:
         await page.keyboard.press("Enter")
         await page.wait_for_load_state("networkidle", timeout=25_000)
+        # Wait for either result rows or a "no results" state
+        try:
+            await page.wait_for_selector(
+                "li.ss-search-row, .no-results, .too-many-results-message",
+                timeout=15_000,
+            )
+        except Exception:
+            pass
         await asyncio.sleep(1.0)
-        log.debug("[%s] Search submitted", doc_label)
     except Exception as e:
         log.warning("[%s] Search submit error: %s", doc_label, e)
 
-    # ── Paginate and parse ───────────────────────────────────────────────────
-    # ── DEBUG: log result area structure on first doc type ───────────────────
-    if doc_label == list(DOC_TYPE_MAP.keys())[0]:
-        result_dom = await page.evaluate("""() => {
-            const text = document.body.innerText.slice(0, 500);
-            const divs = Array.from(document.querySelectorAll('div[class]')).slice(0,20).map(d=>d.className.slice(0,60));
-            const lis = Array.from(document.querySelectorAll('li[class]')).slice(0,10).map(l=>l.className.slice(0,60));
-            return { body_text: text, div_classes: divs, li_classes: lis };
-        }""")
-        log.info("RESULT body text: %s", result_dom.get('body_text','')[:300])
-        log.info("RESULT div classes: %s", result_dom.get('div_classes',[])[:10])
-        log.info("RESULT li classes: %s", result_dom.get('li_classes',[])[:5])
-
-    page_num = 1
-    while page_num <= MAX_PAGES:
-        html = await page.content()
-        page_recs = _parse_result_cards(html, doc_label, cat, cat_label)
-
-        if not page_recs:
-            log.debug("No cards on page %d for %s", page_num, doc_label)
+    # ── Load all rows (portal serves 100/page; scroll triggers lazy load) ────
+    prev = -1
+    for _ in range(MAX_PAGES):
+        now = await page.locator("li.ss-search-row").count()
+        if now == prev:
+            break
+        prev = now
+        try:
+            await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+            await asyncio.sleep(1.0)
+        except Exception:
             break
 
-        records.extend(page_recs)
-        log.info("  Page %d: %d records (running total: %d)", page_num, len(page_recs), len(records))
-
-        # Check for Next page button
-        next_found = False
-        for next_sel in [
-            "button:has-text('Next')", "a:has-text('Next')",
-            "[aria-label='Next page']", ".pagination-next",
-            "button:has-text('›')", "a:has-text('›')",
-        ]:
-            try:
-                btn = page.locator(next_sel).first
-                if await btn.is_visible(timeout=1_500) and await btn.is_enabled():
-                    await btn.click()
-                    await page.wait_for_load_state("networkidle", timeout=15_000)
-                    await asyncio.sleep(0.8)
-                    next_found = True
-                    break
-            except Exception:
-                continue
-
-        if not next_found:
-            break
-        page_num += 1
-
+    html = await page.content()
+    records = _parse_result_rows(html, doc_label)
+    log.info("  Parsed %d lead rows for %s (%d raw rows on page)",
+             len(records), doc_label, prev if prev > 0 else 0)
     return records
 
 
-def _parse_result_cards(html: str, doc_label: str, cat: str, cat_label: str) -> list[Record]:
+def _parse_result_rows(html: str, searched_label: str) -> list[Record]:
     """
-    Parse the card-based results from the Ventura clerk portal.
+    Parse the Ventura clerk portal search-result rows.
 
-    Each result card contains:
-      - Document number + type  (e.g. "2026000033864 • NOTICE OF DEFAULT")
-      - Recording Date          (e.g. "05/08/2026 09:49 AM")
-      - Grantor(s)              (owner/seller)
-      - Grantee(s)              (buyer/lender)
+    Each row is:
+        <li class="ss-search-row" data-documentid="DOC..." data-href="/web/document/...">
+          <h1>2026000052402 • NOTICE OF DEFAULT</h1>
+          <ul class="selfServiceSearchResultColumn">
+            <li>Recording Date</li><li>07/02/2026 11:51 AM</li>
+          </ul>
+          <ul class="selfServiceSearchResultColumn">
+            <li>Grantor (2)</li><li>SPENCER PETER S</li><li>SPENCER LINDA L</li>
+          </ul>
+          <ul class="selfServiceSearchResultColumn"><li>Grantee</li>...</ul>
+        </li>
+
+    The actual doc type is read from each row (the portal's "Contains Any" match
+    returns related types too); rows whose real type isn't a motivated-seller
+    signal are dropped by _categorize().
     """
     from bs4 import BeautifulSoup
 
     records: list[Record] = []
     soup = BeautifulSoup(html, "lxml")
 
-    # The results render as a list of card-like divs.
-    # Each card has the doc number as a prominent text element.
-    # We look for the repeating card container.
+    for row in soup.select("li.ss-search-row"):
+        h1 = row.select_one("h1")
+        header = h1.get_text(" ", strip=True) if h1 else ""
+        m = re.match(r"\s*(\d{6,})\s*[•·]\s*(.+?)\s*$", header)
+        if not m:
+            continue
+        doc_num, doc_type = m.group(1), m.group(2).strip()
 
-    # Strategy: find all doc number patterns (20-digit number + bullet + doc type)
-    # then walk up to the card root and extract fields.
-    doc_num_pattern = re.compile(r"20\d{10,}")
-
-    # Try to find card containers — common patterns in county SPAs
-    cards = (
-        soup.find_all("div", class_=re.compile(r"result|record|card|item|row", re.I))
-        or soup.find_all("li", class_=re.compile(r"result|record|item", re.I))
-    )
-
-    # Filter to only cards that contain a doc number
-    cards = [c for c in cards if doc_num_pattern.search(c.get_text())]
-
-    # Deduplicate cards (nested divs may both match)
-    seen_texts: set[str] = set()
-    unique_cards = []
-    for card in cards:
-        txt = card.get_text(" ", strip=True)[:80]
-        if txt not in seen_texts:
-            seen_texts.add(txt)
-            unique_cards.append(card)
-
-    log.debug("Found %d result cards for %s", len(unique_cards), doc_label)
-
-    for card in unique_cards:
-        text = card.get_text(" ", strip=True)
-
-        # Doc number
-        m = doc_num_pattern.search(text)
-        doc_num = m.group() if m else ""
-
-        # Recording date — "mm/dd/yyyy hh:mm AM/PM"
-        date_m = re.search(r"\d{2}/\d{2}/\d{4}", text)
-        filed = date_m.group() if date_m else ""
-
-        # Grantor — label appears as "Grantor" or "Grantor (N)"
-        grantor_m = re.search(r"Grantor(?:\s*\(\d+\))?\s+([A-Z][A-Z\s,]+?)(?=Grantee|$)", text)
-        owner = grantor_m.group(1).strip() if grantor_m else ""
-
-        # Grantee
-        grantee_m = re.search(r"Grantee(?:\s*\(\d+\))?\s+([A-Z][A-Z\s,]+?)(?=Grantor|Recording|$)", text)
-        grantee = grantee_m.group(1).strip() if grantee_m else ""
-
-        # Detail link
-        link = card.find("a", href=True)
-        clerk_url = f"{CLERK_BASE}{link['href']}" if link and link["href"].startswith("/") else (link["href"] if link else "")
-
-        if not doc_num:
+        cat, cat_label = _categorize(doc_type)
+        if cat is None:            # reversal / satisfaction / unscored — skip
             continue
 
-        rec = Record(
+        filed, grantors, grantees = "", [], []
+        for ul in row.select("ul.selfServiceSearchResultColumn"):
+            lis = ul.find_all("li", recursive=False)
+            if not lis:
+                continue
+            label = lis[0].get_text(" ", strip=True).lower()
+            vals = [li.get_text(" ", strip=True) for li in lis[1:] if li.get_text(strip=True)]
+            if "recording date" in label:
+                if vals:
+                    dm = re.search(r"\d{2}/\d{2}/\d{4}", vals[0])
+                    filed = dm.group() if dm else vals[0]
+            elif label.startswith("grantor"):
+                grantors = vals
+            elif label.startswith("grantee"):
+                grantees = vals
+
+        href = row.get("data-href", "")
+        clerk_url = f"{CLERK_BASE}{href}" if href.startswith("/") else href
+
+        records.append(Record(
             doc_num   = doc_num,
-            doc_type  = doc_label,
+            doc_type  = doc_type,
             filed     = filed,
             cat       = cat,
             cat_label = cat_label,
-            owner     = owner,
-            grantee   = grantee,
+            owner     = grantors[0] if grantors else "",
+            grantee   = grantees[0] if grantees else "",
             clerk_url = clerk_url,
-        )
-        records.append(rec)
+        ))
 
     return records
 
