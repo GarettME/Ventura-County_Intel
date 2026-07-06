@@ -63,6 +63,15 @@ LOOKBACK_DAYS   = int(os.getenv("LOOKBACK_DAYS", "7"))
 MAX_PAGES       = 20        # safety cap
 RETRY_ATTEMPTS  = 3
 
+# ── ReportAll USA parcel API (address/mailing enrichment by owner name) ───────
+# The recorder portal has no property address; we resolve owner name → parcel
+# via ReportAll (the dataset behind LandGlide). Set REPORTALL_API_KEY to enable;
+# when unset the scraper runs unchanged and just leaves address fields blank.
+REPORTALL_API_KEY = os.getenv("REPORTALL_API_KEY", "").strip()
+REPORTALL_URL     = "https://reportallusa.com/api/parcels"
+REPORTALL_REGION  = os.getenv("REPORTALL_REGION", "Ventura County, CA")
+REPORTALL_VERSION = "9"
+
 # Search terms to submit — must match the EXACT document-type labels as they
 # appear in the Ventura portal's autocomplete (confirmed against the live DOM).
 # The portal matches "Contains Any", so each term also returns longer labels
@@ -140,6 +149,7 @@ class Record:
     mail_city:    str           = ""
     mail_state:   str           = ""
     mail_zip:     str           = ""
+    apn:          str           = ""
     clerk_url:    str           = ""
     flags:        list          = field(default_factory=list)
     score:        int           = 0
@@ -509,6 +519,121 @@ def _parse_result_rows(html: str, searched_label: str) -> list[Record]:
 
 
 # ════════════════════════════════════════════════════════════════════════════
+# ADDRESS ENRICHMENT — ReportAll USA parcel API (owner name → property/mailing)
+# ════════════════════════════════════════════════════════════════════════════
+
+_NAME_STOPWORDS = {
+    "LLC", "INC", "CORP", "CO", "LP", "LLP", "TRUST", "TR", "ESTATE", "THE",
+    "AND", "ETAL", "ET", "AL", "REVOCABLE", "LIVING", "FAMILY", "A", "AN", "OF",
+}
+
+
+def _name_tokens(name: str) -> set[str]:
+    """Significant word tokens of an owner name, minus entity/filler words."""
+    toks = re.findall(r"[A-Z0-9]+", (name or "").upper())
+    return {t for t in toks if t not in _NAME_STOPWORDS and len(t) > 1}
+
+
+def _compose_site_address(p: dict) -> str:
+    """Prefer the API's ready-made site address; else build from parts."""
+    if p.get("address"):
+        return p["address"].strip()
+    parts = [p.get("addr_number"), p.get("addr_street_prefix"),
+             p.get("addr_street_name"), p.get("addr_street_type")]
+    return " ".join(x for x in parts if x).strip()
+
+
+def _reportall_query(session, owner: str) -> tuple[list[dict], Optional[str]]:
+    """Query ReportAll for parcels owned by `owner` within the target region.
+    Returns (results, error). Retries once on the 429 rate-limit response."""
+    params = {
+        "client": REPORTALL_API_KEY,
+        "v": REPORTALL_VERSION,
+        "region": REPORTALL_REGION,
+        "owner": owner,
+        "rpp": "20",
+    }
+    for attempt in range(2):
+        try:
+            r = session.get(REPORTALL_URL, params=params, timeout=25)
+        except Exception as e:
+            return [], f"request error: {e}"
+        if r.status_code == 429:            # rate limited — brief backoff, retry
+            time.sleep(1.5)
+            continue
+        if r.status_code != 200:
+            return [], f"HTTP {r.status_code}"
+        try:
+            data = r.json()
+        except Exception as e:
+            return [], f"bad JSON: {e}"
+        if data.get("status") not in (None, "OK"):
+            return [], f"api status: {data.get('status')} {data.get('message','')}"
+        return data.get("results", []) or [], None
+    return [], "rate limited"
+
+
+def _apply_parcel(rec: Record, p: dict, multi: int) -> None:
+    """Fill address/mailing/APN fields on `rec` from a matched parcel `p`."""
+    rec.prop_address = _compose_site_address(p)
+    rec.prop_city    = (p.get("addr_city") or "").strip()
+    rec.prop_zip     = (p.get("addr_zip") or "").strip()
+    rec.prop_state   = (p.get("state_abbr") or rec.prop_state or "CA").strip()
+    rec.mail_address = (p.get("mail_address1") or "").strip()
+    rec.mail_city    = (p.get("mail_placename") or "").strip()
+    rec.mail_state   = (p.get("mail_statename") or "").strip()
+    rec.mail_zip     = (p.get("mail_zipcode") or "").strip()
+    rec.apn          = (p.get("parcel_id") or "").strip()
+    if multi > 1:
+        rec.flags.append(f"Multiple parcels ({multi}) — verify property")
+
+
+def enrich_addresses(records: list[Record]) -> None:
+    """Fill property/mailing address on each record via ReportAll, matching on
+    owner name within the region. Dedups lookups by owner to minimize API calls.
+    No-ops (leaving fields blank) when REPORTALL_API_KEY is unset."""
+    if not REPORTALL_API_KEY:
+        log.info("REPORTALL_API_KEY not set — skipping address enrichment")
+        return
+
+    to_lookup = sorted({r.owner.strip() for r in records if r.owner.strip()})
+    log.info("Enriching addresses via ReportAll for %d unique owners …", len(to_lookup))
+
+    session = requests.Session()
+    session.headers.update({"User-Agent": "Ventura-County-Intel/1.0"})
+
+    resolved: dict[str, tuple[Optional[dict], int]] = {}   # owner → (parcel, n_matches)
+    matched = 0
+    for owner in to_lookup:
+        results, err = _reportall_query(session, owner)
+        if err:
+            log.warning("  ReportAll lookup failed for %r: %s", owner, err)
+            resolved[owner] = (None, 0)
+            time.sleep(0.1)
+            continue
+
+        # Keep only parcels whose owner shares a significant token with the query
+        # (guards against a common surname returning unrelated people).
+        q = _name_tokens(owner)
+        good = [p for p in results if _name_tokens(p.get("owner", "")) & q] if q else results
+        if good:
+            resolved[owner] = (good[0], len(good))
+            matched += 1
+        else:
+            resolved[owner] = (None, 0)
+        time.sleep(0.1)     # stay well under the 20 req/s limit
+
+    for rec in records:
+        parcel, n = resolved.get(rec.owner.strip(), (None, 0))
+        if parcel:
+            _apply_parcel(rec, parcel, n)
+        elif rec.owner.strip():
+            rec.flags.append("No parcel match")
+
+    log.info("Address enrichment: %d/%d owners matched a parcel", matched, len(to_lookup))
+
+
+# ════════════════════════════════════════════════════════════════════════════
 # SCORING
 # ════════════════════════════════════════════════════════════════════════════
 
@@ -600,6 +725,7 @@ def save_ghl_csv(records: list[Record]) -> None:
         "First Name", "Last Name",
         "Mailing Address", "Mailing City", "Mailing State", "Mailing Zip",
         "Property Address", "Property City", "Property State", "Property Zip",
+        "APN",
         "Lead Type", "Document Type", "Date Filed", "Document Number",
         "Amount/Debt Owed", "Seller Score", "Motivated Seller Flags",
         "Source", "Public Records URL",
@@ -627,6 +753,7 @@ def save_ghl_csv(records: list[Record]) -> None:
                 "Property City":          r.prop_city,
                 "Property State":         r.prop_state or "CA",
                 "Property Zip":           r.prop_zip,
+                "APN":                    r.apn,
                 "Lead Type":              r.cat_label,
                 "Document Type":          r.doc_type,
                 "Date Filed":             r.filed,
@@ -658,14 +785,7 @@ async def main() -> None:
     # Scrape
     records = await clerk_scrape(date_from, date_to)
 
-    # Score
-    log.info("Scoring %d records …", len(records))
-    for rec in records:
-        score_record(rec)
-    records = apply_lp_fc_combo_bonus(records)
-    records.sort(key=lambda r: r.score, reverse=True)
-
-    # Deduplicate by doc_num
+    # Deduplicate by doc_num FIRST, so we enrich/score each lead only once
     seen: set[str] = set()
     unique: list[Record] = []
     for r in records:
@@ -674,6 +794,16 @@ async def main() -> None:
             seen.add(key)
             unique.append(r)
     log.info("After dedup: %d unique records", len(unique))
+
+    # Enrich with property / mailing address (ReportAll, by owner name)
+    enrich_addresses(unique)
+
+    # Score (needs addresses in place so the "Has address" bonus applies)
+    log.info("Scoring %d records …", len(unique))
+    for rec in unique:
+        score_record(rec)
+    unique = apply_lp_fc_combo_bonus(unique)
+    unique.sort(key=lambda r: r.score, reverse=True)
 
     # Save
     save_records_json(unique, date_from, date_to)

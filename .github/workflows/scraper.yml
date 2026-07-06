@@ -47,6 +47,7 @@ jobs:
       PYTHONPATH: ${{ github.workspace }}/scraper
       DEBUG: ${{ github.event.inputs.debug_mode || 'false' }}
       LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '7' }}
+      REPORTALL_API_KEY: ${{ secrets.REPORTALL_API_KEY }}   # optional: enables address enrichment
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true   # suppress Node.js 20 deprecation warning
 
     steps:
