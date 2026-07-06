@@ -1,12 +1,12 @@
 {
-  "fetched_at": "2026-07-06T11:22:19.714342Z",
+  "fetched_at": "2026-07-06T20:17:47.432548Z",
   "source": "Ventura County Clerk-Recorder",
   "date_range": {
     "from": "06/29/2026",
     "to": "07/06/2026"
   },
-  "total": 153,
-  "with_address": 0,
+  "total": 176,
+  "with_address": 31,
   "records": [
     {
       "doc_num": "2026000048402",
@@ -18,21 +18,52 @@
       "grantee": "",
       "amount": null,
       "legal": "",
-      "prop_address": "",
-      "prop_city": "",
+      "prop_address": "1607 E CALLE ZOCALO",
+      "prop_city": "THOUSAND OAKS",
       "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
+      "prop_zip": "91360",
+      "mail_address": "PO BOX 6053",
+      "mail_city": "WESTLAKE VILLAGE",
+      "mail_state": "CA",
+      "mail_zip": "91359",
+      "apn": "5920031095",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8490?search=DOCSEARCH17S3",
       "flags": [
         "Pre-foreclosure",
         "LLC / corp owner",
-        "New this week"
+        "New this week",
+        "Has address"
       ],
-      "score": 55
+      "score": 60
+    },
+    {
+      "doc_num": "2026000048427",
+      "doc_type": "MECHANICS LIEN",
+      "filed": "07/01/2026",
+      "cat": "mechanic_lien",
+      "cat_label": "Mechanics Lien",
+      "owner": "DARIO L PINI TRUST",
+      "grantee": "CALPORTLAND",
+      "amount": null,
+      "legal": "",
+      "prop_address": "615 HUENEME Rd",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "2019 STATE ST",
+      "mail_city": "SANTA BARBARA",
+      "mail_state": "CA",
+      "mail_zip": "93105",
+      "apn": "2070202030",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8486?search=DOCSEARCH17S3",
+      "flags": [
+        "Multiple parcels (2) \u2014 verify property",
+        "Mechanic lien",
+        "LLC / corp owner",
+        "New this week",
+        "Has address"
+      ],
+      "score": 60
     },
     {
       "doc_num": "2026000048253",
@@ -52,8 +83,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8305?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "LLC / corp owner",
         "New this week"
@@ -78,8 +111,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7300?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "LLC / corp owner",
         "New this week"
@@ -104,8 +139,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7299?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "LLC / corp owner",
         "New this week"
@@ -130,8 +167,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S13030?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "LLC / corp owner",
         "New this week"
@@ -156,8 +195,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7382?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "LLC / corp owner",
         "New this week"
@@ -182,8 +223,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7381?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "LLC / corp owner",
         "New this week"
@@ -208,8 +251,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7380?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "LLC / corp owner",
         "New this week"
@@ -234,8 +279,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7379?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "LLC / corp owner",
         "New this week"
@@ -260,8 +307,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7326?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "LLC / corp owner",
         "New this week"
@@ -269,13 +318,804 @@
       "score": 55
     },
     {
-      "doc_num": "2026000048427",
+      "doc_num": "2026000048680",
+      "doc_type": "NOTICE OF DEFAULT",
+      "filed": "07/01/2026",
+      "cat": "foreclosure",
+      "cat_label": "Notice of Default",
+      "owner": "SPENCER PETER S",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "3298 S ALLEGHENY Ct",
+      "prop_city": "WESTLAKE VILLAGE",
+      "prop_state": "CA",
+      "prop_zip": "91362",
+      "mail_address": "3298 ALLEGHENY CT",
+      "mail_city": "WESTLAKE VILLAGE",
+      "mail_state": "CA",
+      "mail_zip": "91362-3508",
+      "apn": "6800175025",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S9061?search=DOCSEARCH17S3",
+      "flags": [
+        "Pre-foreclosure",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048416",
+      "doc_type": "NOTICE OF DEFAULT",
+      "filed": "07/01/2026",
+      "cat": "foreclosure",
+      "cat_label": "Notice of Default",
+      "owner": "BERMUDEZ MARCELO",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "751 CAMINO DURANGO",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "751 CAMINO DURANGO",
+      "mail_city": "THOUSAND OAKS",
+      "mail_state": "CA",
+      "mail_zip": "91360",
+      "apn": "6630122065",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8494?search=DOCSEARCH17S3",
+      "flags": [
+        "Pre-foreclosure",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000047703",
+      "doc_type": "NOTICE OF DEFAULT",
+      "filed": "06/29/2026",
+      "cat": "foreclosure",
+      "cat_label": "Notice of Default",
+      "owner": "GOLDSTEIN DANIEL H",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "1243 N SIXTH St",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "1243 N SIXTH ST",
+      "mail_city": "PORT HUENEME",
+      "mail_state": "CA",
+      "mail_zip": "93041",
+      "apn": "2070032055",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S6951?search=DOCSEARCH17S3",
+      "flags": [
+        "Pre-foreclosure",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048052",
+      "doc_type": "NOTICE OF TRUSTEES SALE",
+      "filed": "06/30/2026",
+      "cat": "foreclosure",
+      "cat_label": "Notice of Trustee Sale",
+      "owner": "DIAZ RAMONA",
+      "grantee": "CLEAR RECON CORP",
+      "amount": null,
+      "legal": "",
+      "prop_address": "401 DE ANZA Wy",
+      "prop_city": "OXNARD",
+      "prop_state": "CA",
+      "prop_zip": "93033",
+      "mail_address": "401 DE ANZA WY",
+      "mail_city": "OXNARD",
+      "mail_state": "CA",
+      "mail_zip": "93033",
+      "apn": "2190343205",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7813?search=DOCSEARCH17S3",
+      "flags": [
+        "Multiple parcels (2) \u2014 verify property",
+        "Pre-foreclosure",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000047557",
+      "doc_type": "NOTICE OF TRUSTEES SALE",
+      "filed": "06/29/2026",
+      "cat": "foreclosure",
+      "cat_label": "Notice of Trustee Sale",
+      "owner": "WILLIS GUDFINNA",
+      "grantee": "CLEAR RECON CORP",
+      "amount": null,
+      "legal": "",
+      "prop_address": "255 SEQUOIA Ct Unit 14",
+      "prop_city": "THOUSAND OAKS",
+      "prop_state": "CA",
+      "prop_zip": "91360",
+      "mail_address": "255 SEQUOIA CT #14",
+      "mail_city": "THOUSAND OAKS",
+      "mail_state": "CA",
+      "mail_zip": "91360",
+      "apn": "5240260115",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S6650?search=DOCSEARCH17S3",
+      "flags": [
+        "Pre-foreclosure",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000047472",
+      "doc_type": "NOTICE ACTION",
+      "filed": "06/29/2026",
+      "cat": "lis_pendens",
+      "cat_label": "Lis Pendens",
+      "owner": "SMITH DENNIS",
+      "grantee": "GARTLAN MCARTHUR ANN",
+      "amount": null,
+      "legal": "",
+      "prop_address": "3655 CASCARA Ct",
+      "prop_city": "SIMI VALLEY",
+      "prop_state": "CA",
+      "prop_zip": "93065",
+      "mail_address": "3655 CASCARA CT",
+      "mail_city": "SIMI VALLEY",
+      "mail_state": "CA",
+      "mail_zip": "93065",
+      "apn": "6190233065",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S6520?search=DOCSEARCH17S3",
+      "flags": [
+        "Multiple parcels (5) \u2014 verify property",
+        "Lis pendens",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048255",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "ESCOBEDO ADRIAN",
+      "grantee": "CREDIT CORP SOLUTIONS INC",
+      "amount": null,
+      "legal": "",
+      "prop_address": "2200 S BEAUFORT Dr",
+      "prop_city": "OXNARD",
+      "prop_state": "CA",
+      "prop_zip": "93033",
+      "mail_address": "2200 S BEAUFORT DR",
+      "mail_city": "OXNARD",
+      "mail_state": "CA",
+      "mail_zip": "93033-4007",
+      "apn": "2200152055",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8308?search=DOCSEARCH17S3",
+      "flags": [
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048251",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "GONZALEZ VALENTIN",
+      "grantee": "TD BANK USA",
+      "amount": null,
+      "legal": "",
+      "prop_address": "6578 RANGEWOOD Ct",
+      "prop_city": "MOORPARK",
+      "prop_state": "CA",
+      "prop_zip": "93021",
+      "mail_address": "6578 RANGEWOOD CT",
+      "mail_city": "MOORPARK",
+      "mail_state": "CA",
+      "mail_zip": "93021",
+      "apn": "5130250145",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8302?search=DOCSEARCH17S3",
+      "flags": [
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048250",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "FERNANDEZ GUSTAVO",
+      "grantee": "SYNCHRONY BANK",
+      "amount": null,
+      "legal": "",
+      "prop_address": "1602 PARK Ave",
+      "prop_city": "PORT HUENEME",
+      "prop_state": "CA",
+      "prop_zip": "93041",
+      "mail_address": "1602 PARK AV",
+      "mail_city": "PORT HUENEME",
+      "mail_state": "CA",
+      "mail_zip": "93041-2439",
+      "apn": "2050422045",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8300?search=DOCSEARCH17S3",
+      "flags": [
+        "Multiple parcels (3) \u2014 verify property",
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048249",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "RHOADS JOHN",
+      "grantee": "SYNCHRONY BANK",
+      "amount": null,
+      "legal": "",
+      "prop_address": "475 LIMONEIRA Ln",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "475 LIMONEIRA LN",
+      "mail_city": "SANTA PAULA",
+      "mail_state": "CA",
+      "mail_zip": "93060",
+      "apn": "1070290305",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8299?search=DOCSEARCH17S3",
+      "flags": [
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048247",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "RUIZ FRANCISCO G",
+      "grantee": "TD BANK USA",
+      "amount": null,
+      "legal": "",
+      "prop_address": "550 PASEO MARGARITA",
+      "prop_city": "OXNARD",
+      "prop_state": "CA",
+      "prop_zip": "93030",
+      "mail_address": "550 PASEO MARGARITA",
+      "mail_city": "OXNARD",
+      "mail_state": "CA",
+      "mail_zip": "93030-5591",
+      "apn": "2140123115",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8295?search=DOCSEARCH17S3",
+      "flags": [
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048244",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "HAMILTON GAVIN",
+      "grantee": "CAVALRY SPV I LLC",
+      "amount": null,
+      "legal": "",
+      "prop_address": "1762 AVENIDA NAVIDAD",
+      "prop_city": "CAMARILLO",
+      "prop_state": "CA",
+      "prop_zip": "93012",
+      "mail_address": "1762 AVENIDA NAVIDAD",
+      "mail_city": "CAMARILLO",
+      "mail_state": "CA",
+      "mail_zip": "93012-4081",
+      "apn": "1600370215",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8290?search=DOCSEARCH17S3",
+      "flags": [
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048242",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "DAO NGHIA D",
+      "grantee": "DISCOVER BANK",
+      "amount": null,
+      "legal": "",
+      "prop_address": "1135 KEY WEST Ct",
+      "prop_city": "OXNARD",
+      "prop_state": "CA",
+      "prop_zip": "93030",
+      "mail_address": "1555 WEST FIFTH ST",
+      "mail_city": "OXNARD",
+      "mail_state": "CA",
+      "mail_zip": "93030",
+      "apn": "2020341115",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8283?search=DOCSEARCH17S3",
+      "flags": [
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048238",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "REGEHR ROBERT",
+      "grantee": "AXIOM ACQUISITIONN VENTURES LLC",
+      "amount": null,
+      "legal": "",
+      "prop_address": "14183 MAYA Crk",
+      "prop_city": "MOORPARK",
+      "prop_state": "CA",
+      "prop_zip": "93021",
+      "mail_address": "14183 MAYA CR",
+      "mail_city": "MOORPARK",
+      "mail_state": "CA",
+      "mail_zip": "93021",
+      "apn": "5120280185",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8273?search=DOCSEARCH17S3",
+      "flags": [
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048218",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "WILDHABER SHARI",
+      "grantee": "SYNCHRONY BANK",
+      "amount": null,
+      "legal": "",
+      "prop_address": "2739 TITANIA Pl",
+      "prop_city": "SIMI VALLEY",
+      "prop_state": "CA",
+      "prop_zip": "93063",
+      "mail_address": "2739 TITANIA PL",
+      "mail_city": "SIMI VALLEY",
+      "mail_state": "CA",
+      "mail_zip": "93063-6553",
+      "apn": "6210062155",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8246?search=DOCSEARCH17S3",
+      "flags": [
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048210",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "LOPEZ ANTHONY",
+      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
+      "amount": null,
+      "legal": "",
+      "prop_address": "815 BARD Rd",
+      "prop_city": "PORT HUENEME",
+      "prop_state": "CA",
+      "prop_zip": "93041",
+      "mail_address": "815 BARD RD",
+      "mail_city": "HUENEME",
+      "mail_state": "CA",
+      "mail_zip": "93041-2561",
+      "apn": "2050361085",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8190?search=DOCSEARCH17S3",
+      "flags": [
+        "Multiple parcels (5) \u2014 verify property",
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048197",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "MORENO ERIC",
+      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
+      "amount": null,
+      "legal": "",
+      "prop_address": "433 MALLARD St",
+      "prop_city": "FILLMORE",
+      "prop_state": "CA",
+      "prop_zip": "93015",
+      "mail_address": "433 MALLARD ST",
+      "mail_city": "FILMORE",
+      "mail_state": "CA",
+      "mail_zip": "93015",
+      "apn": "0460310135",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8177?search=DOCSEARCH17S3",
+      "flags": [
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048189",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "GARCIA SERGIO",
+      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
+      "amount": null,
+      "legal": "",
+      "prop_address": "1521 PARK Ave",
+      "prop_city": "PORT HUENEME",
+      "prop_state": "CA",
+      "prop_zip": "93041",
+      "mail_address": "1521 PARK AV",
+      "mail_city": "PORT HUENEME",
+      "mail_state": "CA",
+      "mail_zip": "93041-2437",
+      "apn": "2050432045",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8169?search=DOCSEARCH17S3",
+      "flags": [
+        "Multiple parcels (10) \u2014 verify property",
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048181",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "MARTINEZ NOE",
+      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
+      "amount": null,
+      "legal": "",
+      "prop_address": "6968 SWAN St",
+      "prop_city": "VENTURA",
+      "prop_state": "CA",
+      "prop_zip": "93003",
+      "mail_address": "6968 SWAN ST",
+      "mail_city": "VENTURA",
+      "mail_state": "CA",
+      "mail_zip": "93003",
+      "apn": "1360131125",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8161?search=DOCSEARCH17S3",
+      "flags": [
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048171",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "MASSIS NIMER M",
+      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
+      "amount": null,
+      "legal": "",
+      "prop_address": "2492 ROXY St",
+      "prop_city": "SIMI VALLEY",
+      "prop_state": "CA",
+      "prop_zip": "93065",
+      "mail_address": "2492 ROXY ST",
+      "mail_city": "SIMI VALLEY",
+      "mail_state": "CA",
+      "mail_zip": "93065-1536",
+      "apn": "6150482165",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8151?search=DOCSEARCH17S3",
+      "flags": [
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048167",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "LOPEZ ULISES",
+      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
+      "amount": null,
+      "legal": "",
+      "prop_address": "939 CALGARY Ave",
+      "prop_city": "VENTURA",
+      "prop_state": "CA",
+      "prop_zip": "93004",
+      "mail_address": "939 CALGARY AVE",
+      "mail_city": "VENTURA",
+      "mail_state": "CA",
+      "mail_zip": "93004-2351",
+      "apn": "0890113155",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8147?search=DOCSEARCH17S3",
+      "flags": [
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048163",
+      "doc_type": "ABSTRACT OF JUDGMENT",
+      "filed": "06/30/2026",
+      "cat": "judgment",
+      "cat_label": "Abstract of Judgment",
+      "owner": "FLORES GISELLE",
+      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
+      "amount": null,
+      "legal": "",
+      "prop_address": "2220 N STOW Ave",
+      "prop_city": "SIMI VALLEY",
+      "prop_state": "CA",
+      "prop_zip": "93063",
+      "mail_address": "2220 STOW ST",
+      "mail_city": "SIMI VALLEY",
+      "mail_state": "CA",
+      "mail_zip": "93063",
+      "apn": "6500132105",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8143?search=DOCSEARCH17S3",
+      "flags": [
+        "Judgment lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000047747",
+      "doc_type": "FEDERAL TAX LIEN",
+      "filed": "06/29/2026",
+      "cat": "tax_lien",
+      "cat_label": "Federal Tax Lien",
+      "owner": "FELDMAN JEFFREY",
+      "grantee": "USA INTERNAL REVENUE SERVICE",
+      "amount": null,
+      "legal": "",
+      "prop_address": "4918 FLORESTA Ct",
+      "prop_city": "WESTLAKE VILLAGE",
+      "prop_state": "CA",
+      "prop_zip": "91362",
+      "mail_address": "4918 FLORESTA CT",
+      "mail_city": "WESTLAKE VILLAGE",
+      "mail_state": "CA",
+      "mail_zip": "91362-4365",
+      "apn": "6900230195",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7296?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000047775",
+      "doc_type": "TAX LIEN",
+      "filed": "06/29/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "HAGMAN THERESA",
+      "grantee": "STATE OF CALIFORNIA FRANCHISE TAX BOARD",
+      "amount": null,
+      "legal": "",
+      "prop_address": "4322 N FIRESIDE Ln",
+      "prop_city": "MOORPARK",
+      "prop_state": "CA",
+      "prop_zip": "93021",
+      "mail_address": "13879 STAGECOACH TL",
+      "mail_city": "MOORPARK",
+      "mail_state": "CA",
+      "mail_zip": "93021",
+      "apn": "5070252045",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7363?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000047764",
+      "doc_type": "TAX LIEN",
+      "filed": "06/29/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "CASTRO JESUS",
+      "grantee": "STATE OF CALIFORNIA FRANCHISE TAX BOARD",
+      "amount": null,
+      "legal": "",
+      "prop_address": "3030 TAFFRAIL Ln",
+      "prop_city": "OXNARD",
+      "prop_state": "CA",
+      "prop_zip": "93035",
+      "mail_address": "3030 TAFFRAIL LN",
+      "mail_city": "OXNARD",
+      "mail_state": "CA",
+      "mail_zip": "93035",
+      "apn": "1850033265",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7323?search=DOCSEARCH17S3",
+      "flags": [
+        "Multiple parcels (5) \u2014 verify property",
+        "Tax lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048394",
       "doc_type": "MECHANICS LIEN",
       "filed": "07/01/2026",
       "cat": "mechanic_lien",
       "cat_label": "Mechanics Lien",
-      "owner": "DARIO L PINI TRUST",
-      "grantee": "CALPORTLAND",
+      "owner": "MATHEU WENDY",
+      "grantee": "CICA CONSTRUCTION INC",
+      "amount": null,
+      "legal": "",
+      "prop_address": "1031 ALMENDRA Pl",
+      "prop_city": "OXNARD",
+      "prop_state": "CA",
+      "prop_zip": "93036",
+      "mail_address": "1031 ALMENDRA PL",
+      "mail_city": "OXNARD",
+      "mail_state": "CA",
+      "mail_zip": "93036-2525",
+      "apn": "1420201265",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8472?search=DOCSEARCH17S3",
+      "flags": [
+        "Mechanic lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048220",
+      "doc_type": "MECHANICS LIEN",
+      "filed": "06/30/2026",
+      "cat": "mechanic_lien",
+      "cat_label": "Mechanics Lien",
+      "owner": "POKRAS DAVID",
+      "grantee": "CHAD DARLING PLASTERING INC",
+      "amount": null,
+      "legal": "",
+      "prop_address": "1420 KINGSBORO",
+      "prop_city": "WESTLAKE VILLAGE",
+      "prop_state": "CA",
+      "prop_zip": "91362",
+      "mail_address": "1420 KINGSBORO CT",
+      "mail_city": "THOUSAND OAKS",
+      "mail_state": "CA",
+      "mail_zip": "91362",
+      "apn": "6900230055",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8251?search=DOCSEARCH17S3",
+      "flags": [
+        "Multiple parcels (2) \u2014 verify property",
+        "Mechanic lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000048106",
+      "doc_type": "MECHANICS LIEN",
+      "filed": "06/30/2026",
+      "cat": "mechanic_lien",
+      "cat_label": "Mechanics Lien",
+      "owner": "BRASHEARS CHRIS",
+      "grantee": "CALIFORNIA NETWORK CABLING LLC",
+      "amount": null,
+      "legal": "",
+      "prop_address": "2326 WILDCAT Ave",
+      "prop_city": "VENTURA",
+      "prop_state": "CA",
+      "prop_zip": "93003",
+      "mail_address": "2326 WILDCAT AVE",
+      "mail_city": "VENTURA",
+      "mail_state": "CA",
+      "mail_zip": "93003-7047",
+      "apn": "1310232315",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8063?search=DOCSEARCH17S3",
+      "flags": [
+        "Mechanic lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000047951",
+      "doc_type": "MECHANICS LIEN",
+      "filed": "06/30/2026",
+      "cat": "mechanic_lien",
+      "cat_label": "Mechanics Lien",
+      "owner": "MACERICH BUENAVENTURA LTD",
+      "grantee": "H4 ELECTRICAL INC",
+      "amount": null,
+      "legal": "",
+      "prop_address": "3449 E MAIN St",
+      "prop_city": "VENTURA",
+      "prop_state": "CA",
+      "prop_zip": "93003",
+      "mail_address": "PO BOX 4085",
+      "mail_city": "SANTA MONICA",
+      "mail_state": "CA",
+      "mail_zip": "90411",
+      "apn": "0770130455",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7669?search=DOCSEARCH17S3",
+      "flags": [
+        "Multiple parcels (12) \u2014 verify property",
+        "Mechanic lien",
+        "New this week",
+        "Has address"
+      ],
+      "score": 50
+    },
+    {
+      "doc_num": "2026000052702",
+      "doc_type": "NOTICE OF DEFAULT",
+      "filed": "07/06/2026",
+      "cat": "foreclosure",
+      "cat_label": "Notice of Default",
+      "owner": "",
+      "grantee": "",
       "amount": null,
       "legal": "",
       "prop_address": "",
@@ -286,13 +1126,91 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8486?search=DOCSEARCH17S3",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14032?search=DOCSEARCH17S3",
       "flags": [
-        "Mechanic lien",
-        "LLC / corp owner",
+        "Pre-foreclosure",
         "New this week"
       ],
-      "score": 55
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052662",
+      "doc_type": "NOTICE OF DEFAULT",
+      "filed": "07/06/2026",
+      "cat": "foreclosure",
+      "cat_label": "Notice of Default",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S13993?search=DOCSEARCH17S3",
+      "flags": [
+        "Pre-foreclosure",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052660",
+      "doc_type": "NOTICE OF DEFAULT",
+      "filed": "07/06/2026",
+      "cat": "foreclosure",
+      "cat_label": "Notice of Default",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S13994?search=DOCSEARCH17S3",
+      "flags": [
+        "Pre-foreclosure",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052487",
+      "doc_type": "NOTICE OF DEFAULT",
+      "filed": "07/06/2026",
+      "cat": "foreclosure",
+      "cat_label": "Notice of Default",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S13458?search=DOCSEARCH17S3",
+      "flags": [
+        "Pre-foreclosure",
+        "New this week"
+      ],
+      "score": 45
     },
     {
       "doc_num": "2026000052402",
@@ -312,6 +1230,7 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S13181?search=DOCSEARCH17S3",
       "flags": [
         "Pre-foreclosure",
@@ -337,6 +1256,7 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S12812?search=DOCSEARCH17S3",
       "flags": [
         "Pre-foreclosure",
@@ -362,82 +1282,8 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S12894?search=DOCSEARCH17S3",
-      "flags": [
-        "Pre-foreclosure",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048680",
-      "doc_type": "NOTICE OF DEFAULT",
-      "filed": "07/01/2026",
-      "cat": "foreclosure",
-      "cat_label": "Notice of Default",
-      "owner": "SPENCER PETER S",
-      "grantee": "",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S9061?search=DOCSEARCH17S3",
-      "flags": [
-        "Pre-foreclosure",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048416",
-      "doc_type": "NOTICE OF DEFAULT",
-      "filed": "07/01/2026",
-      "cat": "foreclosure",
-      "cat_label": "Notice of Default",
-      "owner": "BERMUDEZ MARCELO",
-      "grantee": "",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8494?search=DOCSEARCH17S3",
-      "flags": [
-        "Pre-foreclosure",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000047703",
-      "doc_type": "NOTICE OF DEFAULT",
-      "filed": "06/29/2026",
-      "cat": "foreclosure",
-      "cat_label": "Notice of Default",
-      "owner": "GOLDSTEIN DANIEL H",
-      "grantee": "",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S6951?search=DOCSEARCH17S3",
       "flags": [
         "Pre-foreclosure",
         "New this week"
@@ -462,8 +1308,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S6553?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Pre-foreclosure",
         "New this week"
       ],
@@ -487,21 +1335,23 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S6566?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Pre-foreclosure",
         "New this week"
       ],
       "score": 45
     },
     {
-      "doc_num": "2026000048052",
-      "doc_type": "NOTICE OF TRUSTEES SALE",
-      "filed": "06/30/2026",
-      "cat": "foreclosure",
-      "cat_label": "Notice of Trustee Sale",
-      "owner": "DIAZ RAMONA",
-      "grantee": "CLEAR RECON CORP",
+      "doc_num": "2026000052733",
+      "doc_type": "NOTICE ACTION",
+      "filed": "07/06/2026",
+      "cat": "lis_pendens",
+      "cat_label": "Lis Pendens",
+      "owner": "",
+      "grantee": "",
       "amount": null,
       "legal": "",
       "prop_address": "",
@@ -512,34 +1362,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7813?search=DOCSEARCH17S3",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14128?search=DOCSEARCH17S3",
       "flags": [
-        "Pre-foreclosure",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000047557",
-      "doc_type": "NOTICE OF TRUSTEES SALE",
-      "filed": "06/29/2026",
-      "cat": "foreclosure",
-      "cat_label": "Notice of Trustee Sale",
-      "owner": "WILLIS GUDFINNA",
-      "grantee": "CLEAR RECON CORP",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S6650?search=DOCSEARCH17S3",
-      "flags": [
-        "Pre-foreclosure",
+        "Lis pendens",
         "New this week"
       ],
       "score": 45
@@ -562,33 +1388,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S6963?search=DOCSEARCH17S3",
       "flags": [
-        "Lis pendens",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000047472",
-      "doc_type": "NOTICE ACTION",
-      "filed": "06/29/2026",
-      "cat": "lis_pendens",
-      "cat_label": "Lis Pendens",
-      "owner": "SMITH DENNIS",
-      "grantee": "GARTLAN MCARTHUR ANN",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S6520?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Lis pendens",
         "New this week"
       ],
@@ -612,6 +1415,7 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S13009?search=DOCSEARCH17S3",
       "flags": [
         "Judgment lien",
@@ -637,8 +1441,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S9204?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -662,8 +1468,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S9125?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -687,8 +1495,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S9116?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -712,8 +1522,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S9053?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -737,8 +1549,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8985?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -762,8 +1576,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8961?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -787,8 +1603,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8470?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -812,8 +1630,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8469?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -837,8 +1657,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8468?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -862,8 +1684,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8467?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -887,8 +1711,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8466?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -912,8 +1738,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8465?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -937,133 +1765,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8359?search=DOCSEARCH17S3",
       "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048255",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "ESCOBEDO ADRIAN",
-      "grantee": "CREDIT CORP SOLUTIONS INC",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8308?search=DOCSEARCH17S3",
-      "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048251",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "GONZALEZ VALENTIN",
-      "grantee": "TD BANK USA",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8302?search=DOCSEARCH17S3",
-      "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048250",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "FERNANDEZ GUSTAVO",
-      "grantee": "SYNCHRONY BANK",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8300?search=DOCSEARCH17S3",
-      "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048249",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "RHOADS JOHN",
-      "grantee": "SYNCHRONY BANK",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8299?search=DOCSEARCH17S3",
-      "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048247",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "RUIZ FRANCISCO G",
-      "grantee": "TD BANK USA",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8295?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1087,8 +1792,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8294?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1112,33 +1819,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8292?search=DOCSEARCH17S3",
       "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048244",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "HAMILTON GAVIN",
-      "grantee": "CAVALRY SPV I LLC",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8290?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1162,33 +1846,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8284?search=DOCSEARCH17S3",
       "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048242",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "DAO NGHIA D",
-      "grantee": "DISCOVER BANK",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8283?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1212,33 +1873,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8277?search=DOCSEARCH17S3",
       "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048238",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "REGEHR ROBERT",
-      "grantee": "AXIOM ACQUISITIONN VENTURES LLC",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8273?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1262,33 +1900,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8247?search=DOCSEARCH17S3",
       "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048218",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "WILDHABER SHARI",
-      "grantee": "SYNCHRONY BANK",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8246?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1312,33 +1927,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8203?search=DOCSEARCH17S3",
       "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048210",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "LOPEZ ANTHONY",
-      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8190?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1362,8 +1954,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8189?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1387,8 +1981,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8188?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1412,8 +2008,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8187?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1437,8 +2035,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8186?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1462,8 +2062,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8185?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1487,8 +2089,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8184?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1512,8 +2116,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8183?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1537,8 +2143,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8182?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1562,8 +2170,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8181?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1587,8 +2197,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8180?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1612,8 +2224,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8179?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1637,33 +2251,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8178?search=DOCSEARCH17S3",
       "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048197",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "MORENO ERIC",
-      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8177?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1687,8 +2278,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8176?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1712,8 +2305,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8175?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1737,8 +2332,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8174?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1762,8 +2359,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8173?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1787,8 +2386,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8172?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1812,8 +2413,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8171?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1837,33 +2440,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8170?search=DOCSEARCH17S3",
       "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048189",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "GARCIA SERGIO",
-      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8169?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1887,8 +2467,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8168?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1912,8 +2494,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8167?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1937,8 +2521,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8166?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1962,8 +2548,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8165?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -1987,8 +2575,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8164?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2012,8 +2602,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8163?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2037,33 +2629,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8162?search=DOCSEARCH17S3",
       "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048181",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "MARTINEZ NOE",
-      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8161?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2087,8 +2656,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8160?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2112,8 +2683,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8159?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2137,8 +2710,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8158?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2162,8 +2737,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8157?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2187,8 +2764,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8156?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2212,8 +2791,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8155?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2237,8 +2818,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8154?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2262,8 +2845,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8153?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2287,33 +2872,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8152?search=DOCSEARCH17S3",
       "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048171",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "MASSIS NIMER M",
-      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8151?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2337,8 +2899,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8150?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2362,8 +2926,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8149?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2387,33 +2953,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8148?search=DOCSEARCH17S3",
       "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048167",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "LOPEZ ULISES",
-      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8147?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2437,8 +2980,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8146?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2462,8 +3007,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8145?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2487,33 +3034,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8144?search=DOCSEARCH17S3",
       "flags": [
-        "Judgment lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048163",
-      "doc_type": "ABSTRACT OF JUDGMENT",
-      "filed": "06/30/2026",
-      "cat": "judgment",
-      "cat_label": "Abstract of Judgment",
-      "owner": "FLORES GISELLE",
-      "grantee": "STATE OF CALIFORNIA EMPLOYMENT DEVELOPMENT DEPARTMENT",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8143?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2537,8 +3061,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8142?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2562,8 +3088,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8141?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2587,8 +3115,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8140?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2612,8 +3142,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8139?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2637,8 +3169,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7581?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2662,8 +3196,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7580?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2687,8 +3223,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S6943?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2712,8 +3250,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S6465?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2737,8 +3277,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S6464?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Judgment lien",
         "New this week"
       ],
@@ -2762,8 +3304,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8306?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -2787,8 +3331,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8304?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -2812,8 +3358,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7301?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -2837,8 +3385,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7298?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -2862,21 +3412,23 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7297?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
       "score": 45
     },
     {
-      "doc_num": "2026000047747",
-      "doc_type": "FEDERAL TAX LIEN",
-      "filed": "06/29/2026",
+      "doc_num": "2026000052681",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
       "cat": "tax_lien",
-      "cat_label": "Federal Tax Lien",
-      "owner": "FELDMAN JEFFREY",
-      "grantee": "USA INTERNAL REVENUE SERVICE",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
       "amount": null,
       "legal": "",
       "prop_address": "",
@@ -2887,7 +3439,450 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7296?search=DOCSEARCH17S3",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14027?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052680",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14026?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052679",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14025?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052678",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14024?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052677",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14023?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052676",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14022?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052675",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14021?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052674",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14020?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052673",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14019?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052672",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14018?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052671",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14017?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052670",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14016?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052669",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14015?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052668",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14014?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052667",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14013?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052666",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14012?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052665",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14011?search=DOCSEARCH17S3",
+      "flags": [
+        "Tax lien",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000052664",
+      "doc_type": "TAX LIEN",
+      "filed": "07/06/2026",
+      "cat": "tax_lien",
+      "cat_label": "Tax Lien",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S14010?search=DOCSEARCH17S3",
       "flags": [
         "Tax lien",
         "New this week"
@@ -2912,8 +3907,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8312?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -2937,8 +3934,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8311?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -2962,8 +3961,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8310?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -2987,8 +3988,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7411?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3012,8 +4015,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7410?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3037,8 +4042,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7386?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3062,8 +4069,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7385?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3087,8 +4096,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7384?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3112,8 +4123,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7383?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3137,8 +4150,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7378?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3162,8 +4177,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7377?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3187,8 +4204,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7376?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3212,8 +4231,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7375?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3237,8 +4258,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7374?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3262,8 +4285,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7373?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3287,8 +4312,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7372?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3312,8 +4339,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7371?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3337,8 +4366,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7370?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3362,8 +4393,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7369?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3387,8 +4420,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7368?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3412,8 +4447,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7367?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3437,8 +4474,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7366?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3462,8 +4501,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7365?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3487,33 +4528,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7364?search=DOCSEARCH17S3",
       "flags": [
-        "Tax lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000047775",
-      "doc_type": "TAX LIEN",
-      "filed": "06/29/2026",
-      "cat": "tax_lien",
-      "cat_label": "Tax Lien",
-      "owner": "HAGMAN THERESA",
-      "grantee": "STATE OF CALIFORNIA FRANCHISE TAX BOARD",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7363?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3537,8 +4555,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7362?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3562,8 +4582,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7361?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3587,8 +4609,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7325?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3612,33 +4636,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7324?search=DOCSEARCH17S3",
       "flags": [
-        "Tax lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000047764",
-      "doc_type": "TAX LIEN",
-      "filed": "06/29/2026",
-      "cat": "tax_lien",
-      "cat_label": "Tax Lien",
-      "owner": "CASTRO JESUS",
-      "grantee": "STATE OF CALIFORNIA FRANCHISE TAX BOARD",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7323?search=DOCSEARCH17S3",
-      "flags": [
+        "No parcel match",
         "Tax lien",
         "New this week"
       ],
@@ -3662,6 +4663,7 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S13184?search=DOCSEARCH17S3",
       "flags": [
         "Mechanic lien",
@@ -3687,6 +4689,7 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S13144?search=DOCSEARCH17S3",
       "flags": [
         "Mechanic lien",
@@ -3712,107 +4715,8 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S12783?search=DOCSEARCH17S3",
-      "flags": [
-        "Mechanic lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048394",
-      "doc_type": "MECHANICS LIEN",
-      "filed": "07/01/2026",
-      "cat": "mechanic_lien",
-      "cat_label": "Mechanics Lien",
-      "owner": "MATHEU WENDY",
-      "grantee": "CICA CONSTRUCTION INC",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8472?search=DOCSEARCH17S3",
-      "flags": [
-        "Mechanic lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048220",
-      "doc_type": "MECHANICS LIEN",
-      "filed": "06/30/2026",
-      "cat": "mechanic_lien",
-      "cat_label": "Mechanics Lien",
-      "owner": "POKRAS DAVID",
-      "grantee": "CHAD DARLING PLASTERING INC",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8251?search=DOCSEARCH17S3",
-      "flags": [
-        "Mechanic lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000048106",
-      "doc_type": "MECHANICS LIEN",
-      "filed": "06/30/2026",
-      "cat": "mechanic_lien",
-      "cat_label": "Mechanics Lien",
-      "owner": "BRASHEARS CHRIS",
-      "grantee": "CALIFORNIA NETWORK CABLING LLC",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S8063?search=DOCSEARCH17S3",
-      "flags": [
-        "Mechanic lien",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000047951",
-      "doc_type": "MECHANICS LIEN",
-      "filed": "06/30/2026",
-      "cat": "mechanic_lien",
-      "cat_label": "Mechanics Lien",
-      "owner": "MACERICH BUENAVENTURA LTD",
-      "grantee": "H4 ELECTRICAL INC",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7669?search=DOCSEARCH17S3",
       "flags": [
         "Mechanic lien",
         "New this week"
@@ -3837,8 +4741,10 @@
       "mail_city": "",
       "mail_state": "",
       "mail_zip": "",
+      "apn": "",
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC213S7603?search=DOCSEARCH17S3",
       "flags": [
+        "No parcel match",
         "Mechanic lien",
         "New this week"
       ],

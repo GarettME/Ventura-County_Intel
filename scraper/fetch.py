@@ -685,7 +685,11 @@ def score_record(rec: Record) -> Record:
         flags.append("Has address")
         score += 5
 
-    rec.flags = flags
+    # Merge scoring flags with any already set (e.g. enrichment flags like
+    # "No parcel match" / "Multiple parcels") rather than clobbering them.
+    for f in flags:
+        if f not in rec.flags:
+            rec.flags.append(f)
     rec.score = min(score, 100)
     return rec
 
