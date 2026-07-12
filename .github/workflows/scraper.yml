@@ -119,6 +119,8 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/records.json data/ghl_export.csv dashboard/records.json
+          # cache file may not exist yet (no key / all lookups errored) — add only if present
+          [ -f data/enrichment_cache.json ] && git add data/enrichment_cache.json || true
           TOTAL=$(python -c "import json; d=json.load(open('data/records.json')); print(d.get('total', len(d.get('records', []))))")
           WITH_ADDR=$(python -c "import json; d=json.load(open('data/records.json')); print(sum(1 for r in d.get('records', []) if r.get('prop_address')))")
           git diff --cached --quiet || \
