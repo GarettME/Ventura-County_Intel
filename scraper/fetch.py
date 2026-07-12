@@ -52,6 +52,7 @@ DASHBOARD_DIR.mkdir(parents=True, exist_ok=True)
 RECORDS_JSON  = DATA_DIR      / "records.json"
 DASHBOARD_JSON= DASHBOARD_DIR / "records.json"
 GHL_CSV       = DATA_DIR      / "ghl_export.csv"
+ENRICH_CACHE_JSON = DATA_DIR  / "enrichment_cache.json"   # owner → parcel, persisted across runs
 
 # ── Config ────────────────────────────────────────────────────────────────────
 CLERK_BASE      = "https://clerkrecorderselfservice.venturacounty.gov"
@@ -71,6 +72,18 @@ REPORTALL_API_KEY = os.getenv("REPORTALL_API_KEY", "").strip()
 REPORTALL_URL     = "https://reportallusa.com/api/parcels"
 REPORTALL_REGION  = os.getenv("REPORTALL_REGION", "Ventura County, CA")
 REPORTALL_VERSION = "9"
+
+# ── Ventura County GIS parcel layer (FREE property enrichment by APN) ──────────
+# Public ArcGIS REST layer — no key, no quota. Once ReportAll resolves an owner
+# to an APN, we pull assessed land/improvement value, last sale price and acreage
+# from the county GIS for free (the equity data a paid tier like Regrid charges
+# for). Joins the layer's APN10 field to ReportAll's 10-digit parcel_id. Set
+# VC_GIS_ENRICH=0 to disable.
+VC_GIS_ENRICH     = os.getenv("VC_GIS_ENRICH", "1").strip() not in ("0", "false", "")
+VC_GIS_PARCEL_URL = os.getenv(
+    "VC_GIS_PARCEL_URL",
+    "https://maps.ventura.org/arcgis/rest/services/SDs/Parcels/MapServer/0/query",
+)
 
 # Search terms to submit — must match the EXACT document-type labels as they
 # appear in the Ventura portal's autocomplete (confirmed against the live DOM).
@@ -150,6 +163,11 @@ class Record:
     mail_state:   str           = ""
     mail_zip:     str           = ""
     apn:          str           = ""
+    assessed_land:        Optional[float] = None   # county GIS (free)
+    assessed_improvement: Optional[float] = None
+    assessed_total:       Optional[float] = None
+    last_sale_price:      Optional[float] = None
+    acreage:              Optional[float] = None
     clerk_url:    str           = ""
     flags:        list          = field(default_factory=list)
     score:        int           = 0
@@ -553,16 +571,24 @@ def _reportall_query(session, owner: str) -> tuple[list[dict], Optional[str]]:
         "owner": owner,
         "rpp": "20",
     }
+    last_note = "rate limited"
     for attempt in range(2):
         try:
             r = session.get(REPORTALL_URL, params=params, timeout=25)
         except Exception as e:
             return [], f"request error: {e}"
-        if r.status_code == 429:            # rate limited — brief backoff, retry
+        if r.status_code == 429:
+            # ReportAll returns 429 for BOTH true throttling and a spent parcel
+            # quota ("...limit reached"). Distinguish them: retrying won't refill
+            # an exhausted quota, so bail immediately with an honest message.
+            body = (r.text or "")[:200].replace("\n", " ").strip()
+            if "limit" in body.lower():
+                return [], "quota/parcel limit reached"
+            last_note = "rate limited"
             time.sleep(1.5)
             continue
         if r.status_code != 200:
-            return [], f"HTTP {r.status_code}"
+            return [], f"HTTP {r.status_code}: {(r.text or '')[:120]}"
         try:
             data = r.json()
         except Exception as e:
@@ -570,7 +596,7 @@ def _reportall_query(session, owner: str) -> tuple[list[dict], Optional[str]]:
         if data.get("status") not in (None, "OK"):
             return [], f"api status: {data.get('status')} {data.get('message','')}"
         return data.get("results", []) or [], None
-    return [], "rate limited"
+    return [], last_note
 
 
 def _apply_parcel(rec: Record, p: dict, multi: int) -> None:
@@ -588,27 +614,62 @@ def _apply_parcel(rec: Record, p: dict, multi: int) -> None:
         rec.flags.append(f"Multiple parcels ({multi}) — verify property")
 
 
+def _load_enrichment_cache() -> dict:
+    """Load the owner → parcel cache persisted across runs. Keyed by the exact
+    owner string; each value is {"parcel": dict|None, "n": int, "at": iso}.
+    A missing key means "never successfully looked up" (so query it); a present
+    key with "parcel": None means a confirmed no-match (so DON'T re-query)."""
+    if not ENRICH_CACHE_JSON.exists():
+        return {}
+    try:
+        data = json.loads(ENRICH_CACHE_JSON.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as e:
+        log.warning("Enrichment cache unreadable (%s) — starting fresh", e)
+        return {}
+    owners = data.get("owners") if isinstance(data, dict) else None
+    return owners if isinstance(owners, dict) else {}
+
+
+def _save_enrichment_cache(owners: dict) -> None:
+    payload = {
+        "region": REPORTALL_REGION,
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "count": len(owners),
+        "owners": owners,
+    }
+    ENRICH_CACHE_JSON.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+
 def enrich_addresses(records: list[Record]) -> None:
     """Fill property/mailing address on each record via ReportAll, matching on
-    owner name within the region. Dedups lookups by owner to minimize API calls.
-    No-ops (leaving fields blank) when REPORTALL_API_KEY is unset."""
+    owner name within the region. Results are cached by owner in
+    data/enrichment_cache.json so each owner is looked up at most once, ever:
+    a daily 7-day-window run re-sees mostly the same owners, and without the
+    cache every one is re-billed (which is how a 1,000-record quota vanished in
+    days). Only successful lookups are cached — API errors (quota/rate-limit/
+    network) are never cached, so they retry on the next run instead of
+    poisoning the cache with false no-matches. No-ops when the key is unset."""
     if not REPORTALL_API_KEY:
         log.info("REPORTALL_API_KEY not set — skipping address enrichment")
         return
 
-    to_lookup = sorted({r.owner.strip() for r in records if r.owner.strip()})
-    log.info("Enriching addresses via ReportAll for %d unique owners …", len(to_lookup))
+    cache = _load_enrichment_cache()
+    owners = sorted({r.owner.strip() for r in records if r.owner.strip()})
+    misses = [o for o in owners if o not in cache]
+    log.info("Address enrichment: %d owners (%d cached, %d to look up)",
+             len(owners), len(owners) - len(misses), len(misses))
 
     session = requests.Session()
     session.headers.update({"User-Agent": "Ventura-County-Intel/1.0"})
 
-    resolved: dict[str, tuple[Optional[dict], int]] = {}   # owner → (parcel, n_matches)
-    matched = 0
-    for owner in to_lookup:
+    looked_up = errors = 0
+    for owner in misses:
         results, err = _reportall_query(session, owner)
         if err:
+            # Do NOT cache errors — leave the owner uncached so a later run
+            # (e.g. after a credit top-up) retries instead of it being stuck.
             log.warning("  ReportAll lookup failed for %r: %s", owner, err)
-            resolved[owner] = (None, 0)
+            errors += 1
             time.sleep(0.1)
             continue
 
@@ -616,21 +677,106 @@ def enrich_addresses(records: list[Record]) -> None:
         # (guards against a common surname returning unrelated people).
         q = _name_tokens(owner)
         good = [p for p in results if _name_tokens(p.get("owner", "")) & q] if q else results
-        if good:
-            resolved[owner] = (good[0], len(good))
-            matched += 1
-        else:
-            resolved[owner] = (None, 0)
+        cache[owner] = {
+            "parcel": good[0] if good else None,
+            "n": len(good),
+            "at": datetime.now(timezone.utc).isoformat(),
+        }
+        looked_up += 1
         time.sleep(0.1)     # stay well under the 20 req/s limit
 
-    for rec in records:
-        parcel, n = resolved.get(rec.owner.strip(), (None, 0))
-        if parcel:
-            _apply_parcel(rec, parcel, n)
-        elif rec.owner.strip():
-            rec.flags.append("No parcel match")
+    if looked_up:
+        _save_enrichment_cache(cache)
 
-    log.info("Address enrichment: %d/%d owners matched a parcel", matched, len(to_lookup))
+    matched = 0
+    for rec in records:
+        entry = cache.get(rec.owner.strip())
+        if entry and entry.get("parcel"):
+            _apply_parcel(rec, entry["parcel"], entry.get("n", 1))
+            matched += 1
+        elif entry is not None and rec.owner.strip():
+            rec.flags.append("No parcel match")
+        # entry is None → owner still uncached (only after an API error);
+        # leave address blank with no flag so it retries next run.
+
+    log.info("Address enrichment: %d/%d records have a parcel "
+             "(%d new lookups, %d errors, cache now %d owners)",
+             matched, len(records), looked_up, errors, len(cache))
+
+
+# ════════════════════════════════════════════════════════════════════════════
+# GIS ENRICHMENT — Ventura County public parcel layer (free, by APN)
+# ════════════════════════════════════════════════════════════════════════════
+
+def _num(v) -> Optional[float]:
+    """Parse a GIS field (declared String but usually numeric) to float, or None."""
+    if v in (None, ""):
+        return None
+    try:
+        return float(str(v).replace(",", "").replace("$", "").strip())
+    except (TypeError, ValueError):
+        return None
+
+
+def enrich_from_gis(records: list[Record]) -> None:
+    """Free second-stage enrichment: for records that already have an APN (from
+    ReportAll), pull assessed land/improvement value, last sale price and acreage
+    from Ventura County's public GIS parcel layer — no key, no quota. Joins the
+    layer's APN10 field to ReportAll's 10-digit parcel_id. Best-effort: any GIS
+    error just leaves these fields blank and the run continues."""
+    if not VC_GIS_ENRICH:
+        return
+
+    by_apn: dict[str, list[Record]] = {}
+    for r in records:
+        apn = (r.apn or "").strip()
+        if apn:
+            by_apn.setdefault(apn, []).append(r)
+    if not by_apn:
+        log.info("GIS enrichment: no records have an APN yet — skipping")
+        return
+
+    apns = sorted(by_apn)
+    log.info("GIS enrichment: querying Ventura parcel layer for %d APNs …", len(apns))
+    session = requests.Session()
+    session.headers.update({"User-Agent": "Ventura-County-Intel/1.0"})
+
+    enriched = 0
+    for i in range(0, len(apns), 100):        # batch to keep each request small
+        chunk = apns[i:i + 100]
+        in_list = ",".join(f"'{a}'" for a in chunk)
+        try:
+            resp = session.post(VC_GIS_PARCEL_URL, data={
+                "where":          f"APN10 IN ({in_list})",
+                "outFields":      "APN10,SITUS,L_V,I_V,SP,ACREAGE",
+                "returnGeometry": "false",
+                "f":              "json",
+            }, timeout=30, verify=False)
+            data = resp.json()
+        except Exception as e:
+            log.warning("  GIS query failed for a batch of %d APNs: %s", len(chunk), e)
+            continue
+        if "error" in data:
+            log.warning("  GIS returned an error: %s", data.get("error"))
+            continue
+
+        for feat in data.get("features", []):
+            a = feat.get("attributes", {})
+            apn = str(a.get("APN10") or "").strip()
+            land = _num(a.get("L_V"))
+            imp  = _num(a.get("I_V"))
+            total = (land or 0) + (imp or 0) if (land is not None or imp is not None) else None
+            for rec in by_apn.get(apn, []):
+                rec.assessed_land        = land
+                rec.assessed_improvement = imp
+                rec.assessed_total       = total
+                rec.last_sale_price      = _num(a.get("SP"))
+                rec.acreage              = _num(a.get("ACREAGE"))
+                if not rec.prop_address and a.get("SITUS"):    # backfill situs address
+                    rec.prop_address = str(a["SITUS"]).strip()
+                enriched += 1
+
+    log.info("GIS enrichment: filled property data on %d records", enriched)
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -685,6 +831,24 @@ def score_record(rec: Record) -> Record:
         flags.append("Has address")
         score += 5
 
+    # Equity signal (free from county GIS): more assessed value = more equity to
+    # motivate a sale.
+    if rec.assessed_total:
+        if rec.assessed_total >= 750_000:
+            flags.append("High equity (≥$750k assessed)")
+            score += 15
+        elif rec.assessed_total >= 400_000:
+            flags.append("Mid equity (≥$400k assessed)")
+            score += 8
+
+    # Absentee owner: mailing zip differs from property zip → owner lives
+    # elsewhere, a classic motivated-seller signal. Compare 5-digit zips (both
+    # from ReportAll) to avoid street-format false positives.
+    if (rec.mail_zip and rec.prop_zip
+            and rec.mail_zip.strip()[:5] != rec.prop_zip.strip()[:5]):
+        flags.append("Absentee owner")
+        score += 10
+
     # Merge scoring flags with any already set (e.g. enrichment flags like
     # "No parcel match" / "Multiple parcels") rather than clobbering them.
     for f in flags:
@@ -730,6 +894,7 @@ def save_ghl_csv(records: list[Record]) -> None:
         "Mailing Address", "Mailing City", "Mailing State", "Mailing Zip",
         "Property Address", "Property City", "Property State", "Property Zip",
         "APN",
+        "Assessed Value", "Last Sale Price", "Acreage",
         "Lead Type", "Document Type", "Date Filed", "Document Number",
         "Amount/Debt Owed", "Seller Score", "Motivated Seller Flags",
         "Source", "Public Records URL",
@@ -758,6 +923,9 @@ def save_ghl_csv(records: list[Record]) -> None:
                 "Property State":         r.prop_state or "CA",
                 "Property Zip":           r.prop_zip,
                 "APN":                    r.apn,
+                "Assessed Value":         f"{r.assessed_total:.0f}"   if r.assessed_total   else "",
+                "Last Sale Price":        f"{r.last_sale_price:.0f}"  if r.last_sale_price  else "",
+                "Acreage":                f"{r.acreage:.4f}"          if r.acreage          else "",
                 "Lead Type":              r.cat_label,
                 "Document Type":          r.doc_type,
                 "Date Filed":             r.filed,
@@ -801,6 +969,9 @@ async def main() -> None:
 
     # Enrich with property / mailing address (ReportAll, by owner name)
     enrich_addresses(unique)
+
+    # Free second stage: assessed value / last sale / acreage from county GIS by APN
+    enrich_from_gis(unique)
 
     # Score (needs addresses in place so the "Has address" bonus applies)
     log.info("Scoring %d records …", len(unique))
