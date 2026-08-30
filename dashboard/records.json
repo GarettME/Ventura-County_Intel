@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-08-29T12:53:31.991707Z",
+  "fetched_at": "2026-08-30T12:24:51.135282Z",
   "source": "Ventura County Clerk-Recorder",
   "date_range": {
-    "from": "08/22/2026",
-    "to": "08/29/2026"
+    "from": "08/23/2026",
+    "to": "08/30/2026"
   },
   "total": 184,
   "with_address": 0,
