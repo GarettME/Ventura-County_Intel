@@ -1,9 +1,9 @@
 {
-  "fetched_at": "2026-10-25T12:12:58.732362Z",
+  "fetched_at": "2026-10-26T13:52:43.274481Z",
   "source": "Ventura County Clerk-Recorder",
   "date_range": {
-    "from": "10/18/2026",
-    "to": "10/25/2026"
+    "from": "10/19/2026",
+    "to": "10/26/2026"
   },
   "total": 144,
   "with_address": 0,
@@ -1156,6 +1156,37 @@
       "score": 45
     },
     {
+      "doc_num": "2026000080324",
+      "doc_type": "NOTICE ACTION",
+      "filed": "10/22/2026",
+      "cat": "lis_pendens",
+      "cat_label": "Lis Pendens",
+      "owner": "BECKER KEVIN",
+      "grantee": "BECKER BILL G",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "assessed_land": null,
+      "assessed_improvement": null,
+      "assessed_total": null,
+      "last_sale_price": null,
+      "acreage": null,
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC234S1515?search=DOCSEARCH17S3",
+      "flags": [
+        "Lis pendens",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
       "doc_num": "2026000080050",
       "doc_type": "NOTICE OF TRUSTEES SALE",
       "filed": "10/21/2026",
@@ -1213,37 +1244,6 @@
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC234S937?search=DOCSEARCH17S3",
       "flags": [
         "Pre-foreclosure",
-        "New this week"
-      ],
-      "score": 45
-    },
-    {
-      "doc_num": "2026000080324",
-      "doc_type": "NOTICE ACTION",
-      "filed": "10/22/2026",
-      "cat": "lis_pendens",
-      "cat_label": "Lis Pendens",
-      "owner": "BECKER KEVIN",
-      "grantee": "BECKER BILL G",
-      "amount": null,
-      "legal": "",
-      "prop_address": "",
-      "prop_city": "",
-      "prop_state": "CA",
-      "prop_zip": "",
-      "mail_address": "",
-      "mail_city": "",
-      "mail_state": "",
-      "mail_zip": "",
-      "apn": "",
-      "assessed_land": null,
-      "assessed_improvement": null,
-      "assessed_total": null,
-      "last_sale_price": null,
-      "acreage": null,
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC234S1515?search=DOCSEARCH17S3",
-      "flags": [
-        "Lis pendens",
         "New this week"
       ],
       "score": 45
