@@ -1,11 +1,11 @@
 {
-  "fetched_at": "2026-11-15T14:25:31.788838Z",
+  "fetched_at": "2026-11-16T16:36:35.343731Z",
   "source": "Ventura County Clerk-Recorder",
   "date_range": {
-    "from": "11/08/2026",
-    "to": "11/15/2026"
+    "from": "11/09/2026",
+    "to": "11/16/2026"
   },
-  "total": 94,
+  "total": 96,
   "with_address": 0,
   "records": [
     {
@@ -451,6 +451,38 @@
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC236S4006?search=DOCSEARCH17S3",
       "flags": [
         "Tax lien",
+        "LLC / corp owner",
+        "New this week"
+      ],
+      "score": 55
+    },
+    {
+      "doc_num": "2026000085666",
+      "doc_type": "MECHANICS LIEN",
+      "filed": "11/13/2026",
+      "cat": "mechanic_lien",
+      "cat_label": "Mechanics Lien",
+      "owner": "G&I XI CA RETAIL LP",
+      "grantee": "GANAHL LUMBER COMPANY",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "assessed_land": null,
+      "assessed_improvement": null,
+      "assessed_total": null,
+      "last_sale_price": null,
+      "acreage": null,
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC237S1161?search=DOCSEARCH17S3",
+      "flags": [
+        "Mechanic lien",
         "LLC / corp owner",
         "New this week"
       ],
@@ -918,6 +950,37 @@
       "last_sale_price": null,
       "acreage": null,
       "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC236S3644?search=DOCSEARCH17S3",
+      "flags": [
+        "Pre-foreclosure",
+        "New this week"
+      ],
+      "score": 45
+    },
+    {
+      "doc_num": "2026000085812",
+      "doc_type": "NOTICE OF TRUSTEES SALE",
+      "filed": "11/16/2026",
+      "cat": "foreclosure",
+      "cat_label": "Notice of Trustee Sale",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "assessed_land": null,
+      "assessed_improvement": null,
+      "assessed_total": null,
+      "last_sale_price": null,
+      "acreage": null,
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC237S1520?search=DOCSEARCH17S3",
       "flags": [
         "Pre-foreclosure",
         "New this week"
@@ -2723,9 +2786,9 @@
       "score": 45
     },
     {
-      "doc_num": "2026000085666",
+      "doc_num": "2026000085815",
       "doc_type": "MECHANICS LIEN",
-      "filed": "11/13/2026",
+      "filed": "11/16/2026",
       "cat": "mechanic_lien",
       "cat_label": "Mechanics Lien",
       "owner": "",
@@ -2746,7 +2809,7 @@
       "assessed_total": null,
       "last_sale_price": null,
       "acreage": null,
-      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC237S1161?search=DOCSEARCH17S3",
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC237S1503?search=DOCSEARCH17S3",
       "flags": [
         "Mechanic lien",
         "New this week"
