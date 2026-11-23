@@ -1,11 +1,11 @@
 {
-  "fetched_at": "2026-11-22T14:59:04.932163Z",
+  "fetched_at": "2026-11-23T18:51:50.775596Z",
   "source": "Ventura County Clerk-Recorder",
   "date_range": {
-    "from": "11/15/2026",
-    "to": "11/22/2026"
+    "from": "11/16/2026",
+    "to": "11/23/2026"
   },
-  "total": 149,
+  "total": 150,
   "with_address": 0,
   "records": [
     {
@@ -1031,6 +1031,37 @@
         "New this week"
       ],
       "score": 55
+    },
+    {
+      "doc_num": "2026000087504",
+      "doc_type": "NOTICE OF DEFAULT",
+      "filed": "11/23/2026",
+      "cat": "foreclosure",
+      "cat_label": "Notice of Default",
+      "owner": "",
+      "grantee": "",
+      "amount": null,
+      "legal": "",
+      "prop_address": "",
+      "prop_city": "",
+      "prop_state": "CA",
+      "prop_zip": "",
+      "mail_address": "",
+      "mail_city": "",
+      "mail_state": "",
+      "mail_zip": "",
+      "apn": "",
+      "assessed_land": null,
+      "assessed_improvement": null,
+      "assessed_total": null,
+      "last_sale_price": null,
+      "acreage": null,
+      "clerk_url": "https://clerkrecorderselfservice.venturacounty.gov/web/document/DOC239S2747?search=DOCSEARCH17S3",
+      "flags": [
+        "Pre-foreclosure",
+        "New this week"
+      ],
+      "score": 45
     },
     {
       "doc_num": "2026000087185",
